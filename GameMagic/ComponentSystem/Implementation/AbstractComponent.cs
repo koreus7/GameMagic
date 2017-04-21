@@ -4,11 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameMagic.Logging
+namespace GameMagic.ComponentSystem.Implementation
 {
-    public interface ISimpleLogger
+    class AbstractComponent
     {
-        void Log(string value);
-        void LogError(string value);
     }
 }

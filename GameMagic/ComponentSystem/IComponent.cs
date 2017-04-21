@@ -10,5 +10,6 @@ namespace GameMagic.ComponentSystem
     public interface IComponent : IIdentifiable
     {
         int GetType();
+        IEntity Entity { get; set; }
     }
 }

@@ -4,6 +4,9 @@ using System.IO.Pipes;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GameMagic.Logging;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace GameMagic.ComponentSystem.Implementation
 {
@@ -12,9 +15,11 @@ namespace GameMagic.ComponentSystem.Implementation
         private readonly ComponentStore components;
         private Dictionary<int, Entity> entities;
         private int entityIDCounter = 1;
+        private ISimpleLogger _logger;
 
-        public World()
+        public World(ISimpleLogger logger)
         {
+            _logger = logger;
             components = new ComponentStore();
             entities = new Dictionary<int, Entity>();
         }
@@ -34,6 +39,14 @@ namespace GameMagic.ComponentSystem.Implementation
             e.ID = entityIDCounter;
             entityIDCounter ++;
             return e;
+        }
+
+        public void Draw(GameTime time, SpriteBatch batch)
+        {
+        }
+
+        public void Update(GameTime time)
+        {
         }
     }
 }

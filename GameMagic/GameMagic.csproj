@@ -44,6 +44,7 @@
     <Compile Include="ComponentSystem\IComponentStore.cs" />
     <Compile Include="ComponentSystem\IEntity.cs" />
     <Compile Include="ComponentSystem\IIdentifiable.cs" />
+    <Compile Include="ComponentSystem\Implementation\AbstractComponent.cs" />
     <Compile Include="ComponentSystem\Implementation\ComponentPool.cs" />
     <Compile Include="ComponentSystem\Implementation\ComponentStore.cs" />
     <Compile Include="ComponentSystem\Implementation\Entity.cs" />
@@ -53,6 +54,7 @@
     <Compile Include="GMGame.cs" />
     <Compile Include="Logging\ConsoleLogger.cs" />
     <Compile Include="Logging\ISimpleLogger.cs" />
+    <Compile Include="MainWorld.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

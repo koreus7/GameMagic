@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GameMagic.ComponentSystem.Implementation;
 
-namespace GameMagic.Logging
+namespace GameMagic
 {
-    public interface ISimpleLogger
+    class MainWorld: World
     {
-        void Log(string value);
-        void LogError(string value);
     }
 }

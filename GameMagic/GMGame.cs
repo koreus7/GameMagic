@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using GameMagic.ComponentSystem.Implementation;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -11,11 +12,13 @@ namespace GameMagic
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        private World world;
 
         public GMGame()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            world = new MainWorld();
         }
 
         /// <summary>
@@ -62,7 +65,7 @@ namespace GameMagic
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
+            world.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -75,7 +78,7 @@ namespace GameMagic
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
+            world.Draw(gameTime, spriteBatch);
 
             base.Draw(gameTime);
         }

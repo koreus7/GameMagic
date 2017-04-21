@@ -8,7 +8,7 @@ using OpenTK.Graphics;
 
 namespace GameMagic.ComponentSystem
 {
-    interface IEntity : IIdentifiable
+    public interface IEntity : IIdentifiable
     {
         T GetComponent<T>() where T : IComponent;
         T AddNewComponent<T>() where T : IComponent, new();

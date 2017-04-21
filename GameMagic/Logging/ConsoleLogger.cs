@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GameMagic.Logging
 {
-    class ConsoleLogger : ISimpleLogger
+    public class ConsoleLogger : ISimpleLogger
     {
         public void Log(string value)
         {
