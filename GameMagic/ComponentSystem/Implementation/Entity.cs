@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework;
 
 namespace GameMagic.ComponentSystem.Implementation
 {
@@ -11,9 +12,12 @@ namespace GameMagic.ComponentSystem.Implementation
     {
         private readonly World _world;
 
-        public Entity(World world)
+        public Vector2 Position { get; set; }
+
+        public Entity(World world, Vector2 pos)
         {
             _world = world;
+            Position = pos;
         }
 
         public T GetComponent<T>() where T : IComponent
@@ -23,7 +27,10 @@ namespace GameMagic.ComponentSystem.Implementation
 
         public T AddNewComponent<T>() where T : IComponent, new()
         {
-            return _world.NewComponent<T>(ID);
+            var c = _world.NewComponent<T>(ID);
+            c.Entity = this;
+            c.Init();
+            return c;
         }
 
         public virtual void Init()

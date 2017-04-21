@@ -15,6 +15,13 @@ namespace GameMagic.Components
 
         public IEntity Entity { get; set; }
 
+        public Texture2D tex { get; set; }
+        
+
+        public void Init()
+        {
+        }
+
         public void Update(GameTime gameTime)
         {
             Logger.Log("Sprite Renderer " + ID + "update");
@@ -22,7 +29,7 @@ namespace GameMagic.Components
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            Logger.Log("Sprite Renderer " + ID + "draw");
+            spriteBatch.Draw(tex, Entity.Position);
         }
     }
 }

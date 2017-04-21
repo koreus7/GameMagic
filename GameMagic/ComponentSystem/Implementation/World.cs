@@ -43,10 +43,12 @@ namespace GameMagic.ComponentSystem.Implementation
 
         public void Draw(GameTime time, SpriteBatch batch)
         {
+            batch.Begin();
             foreach(IComponent c in components.GetComponents())
             {
                 c.Draw(time, batch);
             }
+            batch.End();
         }
 
         public void Update(GameTime time)

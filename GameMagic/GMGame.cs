@@ -19,7 +19,6 @@ namespace GameMagic
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             world = new MainWorld();
-            world.Init();
         }
 
         /// <summary>
@@ -44,7 +43,10 @@ namespace GameMagic
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
+            StaticImg.abc = Content.Load<Texture2D>("img/abc");
             // TODO: use this.Content to load your game content here
+
+            world.Init();
         }
 
         /// <summary>

@@ -52,7 +52,6 @@
     <Compile Include="ComponentSystem\IPoolableComponent.cs" />
     <Compile Include="Components\SpriteRenderer.cs" />
     <Compile Include="Entities\TestEntity.cs" />
-    <Compile Include="GameObject.cs" />
     <Compile Include="GMGame.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="Logging\ConsoleLogger.cs" />
@@ -60,6 +59,7 @@
     <Compile Include="MainWorld.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StaticImg.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="artemis, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">

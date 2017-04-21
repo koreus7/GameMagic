@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using GameMagic.ComponentSystem.Implementation;
 using GameMagic.Entities;
+using Microsoft.Xna.Framework;
 
 namespace GameMagic
 {
@@ -12,14 +13,8 @@ namespace GameMagic
     {
         public override void Init()
         {
-            this.AddEntity(new TestEntity(this));
-            this.AddEntity(new TestEntity(this));
-            this.AddEntity(new TestEntity(this));
-            this.AddEntity(new TestEntity(this));
-            this.AddEntity(new TestEntity(this));
-            this.AddEntity(new TestEntity(this));
-            this.AddEntity(new TestEntity(this));
-            this.AddEntity(new TestEntity(this));
+            this.AddEntity(new TestEntity(this, Vector2.One));
+            this.AddEntity(new TestEntity(this, new Vector2(100,100)));
         }
     }
 }

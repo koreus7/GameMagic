@@ -12,6 +12,7 @@ namespace GameMagic.ComponentSystem
     public interface IComponent : IIdentifiable
     {
         IEntity Entity { get; set; }
+        void Init();
         void Update(GameTime gameTime);
         void Draw(GameTime gameTime, SpriteBatch spriteBatch);
     }
