@@ -26,6 +26,11 @@ namespace GameMagic.ComponentSystem.Implementation
             return _world.NewComponent<T>(ID);
         }
 
+        public virtual void Init()
+        {
+
+        }
+
         public int ID { get; set; }    
     }
 }

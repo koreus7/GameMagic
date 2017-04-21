@@ -4,12 +4,15 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace GameMagic.ComponentSystem
 {
     public interface IComponent : IIdentifiable
     {
-        int GetType();
         IEntity Entity { get; set; }
+        void Update(GameTime gameTime);
+        void Draw(GameTime gameTime, SpriteBatch spriteBatch);
     }
 }

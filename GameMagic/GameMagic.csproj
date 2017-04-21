@@ -50,8 +50,11 @@
     <Compile Include="ComponentSystem\Implementation\Entity.cs" />
     <Compile Include="ComponentSystem\Implementation\World.cs" />
     <Compile Include="ComponentSystem\IPoolableComponent.cs" />
+    <Compile Include="Components\SpriteRenderer.cs" />
+    <Compile Include="Entities\TestEntity.cs" />
     <Compile Include="GameObject.cs" />
     <Compile Include="GMGame.cs" />
+    <Compile Include="Logger.cs" />
     <Compile Include="Logging\ConsoleLogger.cs" />
     <Compile Include="Logging\ISimpleLogger.cs" />
     <Compile Include="MainWorld.cs" />

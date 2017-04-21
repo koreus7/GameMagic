@@ -19,6 +19,7 @@ namespace GameMagic
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             world = new MainWorld();
+            world.Init();
         }
 
         /// <summary>

@@ -15,11 +15,9 @@ namespace GameMagic.ComponentSystem.Implementation
         private readonly ComponentStore components;
         private Dictionary<int, Entity> entities;
         private int entityIDCounter = 1;
-        private ISimpleLogger _logger;
 
-        public World(ISimpleLogger logger)
+        public World()
         {
-            _logger = logger;
             components = new ComponentStore();
             entities = new Dictionary<int, Entity>();
         }
@@ -37,16 +35,31 @@ namespace GameMagic.ComponentSystem.Implementation
         public T AddEntity<T>(T e) where T : Entity
         {
             e.ID = entityIDCounter;
-            entityIDCounter ++;
+            e.Init();
+            entities[e.ID] = e;
+            entityIDCounter++;
             return e;
         }
 
         public void Draw(GameTime time, SpriteBatch batch)
         {
+            foreach(IComponent c in components.GetComponents())
+            {
+                c.Draw(time, batch);
+            }
         }
 
         public void Update(GameTime time)
         {
+            foreach (IComponent c in components.GetComponents())
+            {
+                c.Update(time);
+            }
+        }
+
+        public virtual void Init()
+        {
+
         }
     }
 }
