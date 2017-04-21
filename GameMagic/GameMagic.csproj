@@ -38,8 +38,21 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="ComponentSystem\IComponent.cs" />
+    <Compile Include="ComponentSystem\IComponentLocator.cs" />
+    <Compile Include="ComponentSystem\IComponentPool.cs" />
+    <Compile Include="ComponentSystem\IComponentStore.cs" />
+    <Compile Include="ComponentSystem\IEntity.cs" />
+    <Compile Include="ComponentSystem\IIdentifiable.cs" />
+    <Compile Include="ComponentSystem\Implementation\ComponentPool.cs" />
+    <Compile Include="ComponentSystem\Implementation\ComponentStore.cs" />
+    <Compile Include="ComponentSystem\Implementation\Entity.cs" />
+    <Compile Include="ComponentSystem\Implementation\World.cs" />
+    <Compile Include="ComponentSystem\IPoolableComponent.cs" />
     <Compile Include="GameObject.cs" />
     <Compile Include="GMGame.cs" />
+    <Compile Include="Logging\ConsoleLogger.cs" />
+    <Compile Include="Logging\ISimpleLogger.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

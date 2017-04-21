@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GameMagic.ComponentSystem
 {
-    interface IPoolableComponent<T> : IComponent where T : IComponent
+    interface IPoolableComponent<TComponent> : IComponent where TComponent : IComponent
     {
         /// <summary>
         /// Reset the component so it can be reused.
@@ -18,6 +18,6 @@ namespace GameMagic.ComponentSystem
         /// Register with the pool so it knows when this component is ready to be reset.
         /// </summary>
         /// <param name="pool"></param>
-        void RegisterWithPool(IComponentPool<T> pool);
+        void RegisterWithPool(IComponentPool<TComponent> pool);
     }
 }

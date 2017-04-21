@@ -8,6 +8,7 @@ namespace GameMagic.ComponentSystem
 {
     interface IComponentStore : IComponentLocator
     {
-        void AddComponent(IComponent component);
+        T AddComponent<T>(int entityID) where T : IComponent, new();
+        T FindComponent<T>(int entityID) where T : IComponent;
     }
 }

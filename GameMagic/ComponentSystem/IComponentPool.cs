@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace GameMagic.ComponentSystem
 {
-    interface IComponentPool<T> where T : IComponent
+    interface IComponentPool<TComponent> where TComponent : IComponent
     {
-        T FindComponent(Guid id);
-        T GetBlankComponent();
+        TComponent FindComponent(Guid id);
+        TComponent GetBlankComponent();
     }
 }

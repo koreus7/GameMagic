@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace GameMagic.ComponentSystem
 {
-    interface IIdentifiable
+    public interface IIdentifiable
     {
-        Guid ID { get; }
+        int ID { get; set; }
     }
 }
