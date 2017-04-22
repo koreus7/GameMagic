@@ -18,6 +18,7 @@ namespace GameMagic
         private KeyboardState newKeyState;
         private KeyboardState oldKeyState;
         private Effect lightEffect;
+        RenderTarget2D rt;
 
         public int Width => graphics.GraphicsDevice.Viewport.Width;
         public int Height => graphics.GraphicsDevice.Viewport.Height;
@@ -57,7 +58,7 @@ namespace GameMagic
 
             lightEffect = Content.Load<Effect>("fx/Light");
 
-            lightEffect.Parameters["Col"].SetValue(new Vector3(0.0f, 0.0f, 1.0f));
+            rt = new RenderTarget2D(GraphicsDevice, graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight, true, graphics.PreferredBackBufferFormat, graphics.PreferredDepthStencilFormat);
 
             world.Init();
         }
@@ -106,14 +107,28 @@ namespace GameMagic
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
+            GraphicsDevice.SetRenderTarget(rt);
             GraphicsDevice.Clear(Color.CornflowerBlue);
-            spriteBatch.Begin(SpriteSortMode.Deferred, 
-                BlendState.NonPremultiplied, 
-                SamplerState.PointClamp,DepthStencilState.Default, 
-                RasterizerState.CullNone, 
-                lightEffect);
+
+            lightEffect.Parameters["res"].SetValue(new Vector2(Width, Height));
+          //  lightEffect.Parameters["time"].SetValue(gameTime.TotalGameTime.Milliseconds/1000.0f);
+
+            //spriteBatch.Begin(SpriteSortMode.Deferred, 
+            //    BlendState.NonPremultiplied, 
+            //    SamplerState.PointClamp,DepthStencilState.Default, 
+            //    RasterizerState.CullNone, 
+            //    lightEffect);
+            spriteBatch.Begin();
             world.Draw(gameTime, spriteBatch);
             spriteBatch.End();
+
+            GraphicsDevice.SetRenderTarget(null);
+            GraphicsDevice.Clear(Color.Orange);
+
+            spriteBatch.Begin(0, null, null, null, null, lightEffect);
+            spriteBatch.Draw(rt, new Vector2(0, 0), Color.White);
+            spriteBatch.End();
+
             base.Draw(gameTime);
         }
 

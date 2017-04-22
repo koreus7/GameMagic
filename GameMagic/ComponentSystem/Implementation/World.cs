@@ -50,6 +50,7 @@ namespace GameMagic.ComponentSystem.Implementation
 
         public void Draw(GameTime time, SpriteBatch batch)
         {
+            Game.DrawRectangle(new Rectangle(0,0,Width,Height), Color.Black);
             foreach(IComponent c in components.GetComponents())
             {
                 c.Draw(time, batch);

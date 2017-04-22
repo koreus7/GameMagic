@@ -14,7 +14,9 @@ sampler TextureSampler = sampler_state
 	Texture = <Texture>;
 };
 
-float3 Col;
+// Uniforms
+//float time;
+float2 res;
 
 // This data comes from the sprite batch vertex shader
 struct VertexShaderOutput
@@ -23,6 +25,19 @@ struct VertexShaderOutput
 	float4 Color : COLOR0;
 	float2 TextureCordinate : TEXCOORD0;
 };
+
+
+float Orb(VertexShaderOutput input)
+{
+    float2 aspect = res/min(res.x,res.y);
+   
+	float2 p = (input.TextureCordinate - 0.5)*aspect*8.0;
+	
+    float c = 1.0/length(p);
+  
+    return c;
+}
+
 
 // Our pixel shader
 float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
@@ -34,8 +49,8 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 	color.g = value;
 	color.b = value;
 	color.a = 1.0f;
-
-	return color* float4(Col,1.0);
+    float o = Orb(input);
+	return float4(o,o,o, 1.0);
 }
 
 // Compile our shader
