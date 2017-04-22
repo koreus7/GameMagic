@@ -60,13 +60,13 @@ namespace GameMagic.ComponentSystem.Implementation
 
 
             
-            foreach (IComponent c in components.GetComponents().Where(x => x.BatchNo == 2))
-            {
-                batch.Begin(0, null, null, null, null, GMGame.vectorEffect);
-                GMGame.vectorEffect.Parameters["vec"].SetValue((c as VectorNode).Val);
-                c.Draw(time, batch);
-                batch.End();
-            }
+            //foreach (IComponent c in components.GetComponents().Where(x => x.BatchNo == 2))
+            //{
+            //    batch.Begin(0, null, null, null, null, GMGame.vectorEffect);
+            //    GMGame.vectorEffect.Parameters["vec"].SetValue((c as VectorNode).Val);
+            //    c.Draw(time, batch);
+            //    batch.End();
+            //}
             
 
             batch.Begin();

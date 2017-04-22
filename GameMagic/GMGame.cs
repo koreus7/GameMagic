@@ -116,6 +116,31 @@ namespace GameMagic
             GraphicsDevice.SetRenderTarget(rt);
             GraphicsDevice.Clear(Color.Black);
 
+
+            //spriteBatch.Begin();
+            //Color[] pixels = new Color[Width * Height];
+            //for (int y = 0; y < Height; y++)
+            //{
+            //    for (int x = 0; x < Width; x++)
+            //    {
+            //        float val = Noise.Generate(x / 300.0f + 1000.0f, y / 300.0f + 1000.0f);
+            //        pixels[(y * Width) + x] = new Color(val, val, val, 1.0f);
+            //    }
+            //}
+
+            //Texture2D myTex = new Texture2D(
+            //  graphics.GraphicsDevice,
+            //  Width,
+            //  Height,
+            //  false,
+            //  SurfaceFormat.Color);
+
+            //myTex.SetData<Color>(pixels);
+
+            //spriteBatch.Draw(myTex, new Vector2(0, 0), Color.White);
+
+            //spriteBatch.End();
+
             //lightEffect.Parameters["res"].SetValue(new Vector2(Width, Height));
             lightEffect.Parameters["res"].SetValue(Vector2.One);
             //  lightEffect.Parameters["time"].SetValue(gameTime.TotalGameTime.Milliseconds/1000.0f);
@@ -133,6 +158,9 @@ namespace GameMagic
             spriteBatch.Begin(0, null, null, null, null, post1);
             spriteBatch.Draw(rt, new Vector2(0, 0), Color.White);
             spriteBatch.End();
+
+
+            
 
             base.Draw(gameTime);
         }

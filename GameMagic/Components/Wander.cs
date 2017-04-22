@@ -27,7 +27,18 @@ namespace GameMagic.Components
 
         public void Update(GameTime gameTime)
         {
-            Vector2 projected = Entity.Position + dir*gameTime.ElapsedGameTime.Milliseconds/5;
+            float x = Entity.Position.X;
+            float y = Entity.Position.Y;
+            int w = Entity.World.Width;
+            int h = Entity.World.Height;
+
+            float theta = Noise.Generate(x/300.0f + 2000.0f, y/300.0f + 1000.0f);
+            dir = new Vector2(5.0f*(float)Math.Cos(theta*2*Math.PI),-5.0f*(float)Math.Sin(theta*2*Math.PI));
+
+            dir += new Vector2(x/w, y/h) * 0.1f;
+            dir += new Vector2((w - x)/w, (h - y)/y) * 0.1f; 
+
+            Vector2 projected = Entity.Position + dir*0.01f*gameTime.ElapsedGameTime.Milliseconds;
             if (projected.X > Entity.World.Width)
             {
                 projected.X = -rect.rect.Width;
@@ -51,7 +62,7 @@ namespace GameMagic.Components
 
         public void SetDir(Vector2 dir)
         {
-            this.dir = dir;
+         //   this.dir = dir;
         }
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)

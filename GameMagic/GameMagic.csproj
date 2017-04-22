@@ -54,9 +54,7 @@
     <Compile Include="ComponentSystem\IPoolableComponent.cs" />
     <Compile Include="Components\RectColider.cs" />
     <Compile Include="Components\SpriteRenderer.cs" />
-    <Compile Include="Components\VectorNode.cs" />
     <Compile Include="Components\Wander.cs" />
-    <Compile Include="Entities\ForceNode.cs" />
     <Compile Include="Entities\TestEntity.cs" />
     <Compile Include="GMGame.cs" />
     <Compile Include="Logger.cs" />
@@ -67,6 +65,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QuadTree.cs" />
     <Compile Include="Rand.cs" />
+    <Compile Include="Noise.cs" />
     <Compile Include="StaticImg.cs" />
   </ItemGroup>
   <ItemGroup>
