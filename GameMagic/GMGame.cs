@@ -17,6 +17,7 @@ namespace GameMagic
         private World world;
         private KeyboardState newKeyState;
         private KeyboardState oldKeyState;
+        private Effect lightEffect;
 
         public int Width => graphics.GraphicsDevice.Viewport.Width;
         public int Height => graphics.GraphicsDevice.Viewport.Height;
@@ -53,7 +54,8 @@ namespace GameMagic
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             StaticImg.asprite = Content.Load<Texture2D>("img/asprite");
-            // TODO: use this.Content to load your game content here
+
+            lightEffect = Content.Load<Effect>("fx/Light");
 
             world.Init();
         }
@@ -103,9 +105,13 @@ namespace GameMagic
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-
+            spriteBatch.Begin(SpriteSortMode.Deferred, 
+                BlendState.NonPremultiplied, 
+                SamplerState.PointClamp,DepthStencilState.Default, 
+                RasterizerState.CullNone, 
+                lightEffect);
             world.Draw(gameTime, spriteBatch);
-
+            spriteBatch.End();
             base.Draw(gameTime);
         }
 
