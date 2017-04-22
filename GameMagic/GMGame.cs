@@ -19,7 +19,7 @@ namespace GameMagic
         private KeyboardState oldKeyState;
         public static Effect lightEffect;
         public static Effect post1;
-        public static Effect vectorEffect;
+        public static Effect mouseEffect;
         RenderTarget2D rt;
 
         public int Width => graphics.GraphicsDevice.Viewport.Width;
@@ -62,7 +62,7 @@ namespace GameMagic
 
             lightEffect = Content.Load<Effect>("fx/Light");
             post1 = Content.Load<Effect>("fx/Post1");
-            vectorEffect = Content.Load<Effect>("fx/Vector");
+            mouseEffect = Content.Load<Effect>("fx/Mouse");
 
             rt = new RenderTarget2D(GraphicsDevice, graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight, true, graphics.PreferredBackBufferFormat, graphics.PreferredDepthStencilFormat);
 
@@ -90,6 +90,7 @@ namespace GameMagic
             
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
+
 
             if (KeyPressed(Keys.F3))
             {

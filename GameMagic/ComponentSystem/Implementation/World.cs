@@ -58,19 +58,17 @@ namespace GameMagic.ComponentSystem.Implementation
             }
             batch.End();
 
-
-            
-            //foreach (IComponent c in components.GetComponents().Where(x => x.BatchNo == 2))
-            //{
-            //    batch.Begin(0, null, null, null, null, GMGame.vectorEffect);
-            //    GMGame.vectorEffect.Parameters["vec"].SetValue((c as VectorNode).Val);
-            //    c.Draw(time, batch);
-            //    batch.End();
-            //}
-            
-
             batch.Begin();
             foreach (IComponent c in components.GetComponents().Where(x => x.BatchNo == 0))
+            {
+                c.Draw(time, batch);
+            }
+            batch.End();
+
+
+            GMGame.mouseEffect.Parameters["res"].SetValue(new Vector2(1, 1));
+            batch.Begin(0, null, null, null, null, GMGame.mouseEffect);
+            foreach (IComponent c in components.GetComponents().Where(x => x.BatchNo == 2))
             {
                 c.Draw(time, batch);
             }

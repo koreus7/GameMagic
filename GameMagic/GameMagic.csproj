@@ -52,9 +52,11 @@
     <Compile Include="ComponentSystem\Implementation\Entity.cs" />
     <Compile Include="ComponentSystem\Implementation\World.cs" />
     <Compile Include="ComponentSystem\IPoolableComponent.cs" />
+    <Compile Include="Components\MouseSprite.cs" />
     <Compile Include="Components\RectColider.cs" />
     <Compile Include="Components\SpriteRenderer.cs" />
     <Compile Include="Components\Wander.cs" />
+    <Compile Include="Entities\MouseEntity.cs" />
     <Compile Include="Entities\TestEntity.cs" />
     <Compile Include="GMGame.cs" />
     <Compile Include="Logger.cs" />
@@ -67,6 +69,7 @@
     <Compile Include="Rand.cs" />
     <Compile Include="Noise.cs" />
     <Compile Include="StaticImg.cs" />
+    <Compile Include="Vector2Extensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="artemis, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">

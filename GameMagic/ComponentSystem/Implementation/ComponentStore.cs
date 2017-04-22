@@ -13,7 +13,8 @@ namespace GameMagic.ComponentSystem.Implementation
         {
             {typeof(SpriteRenderer), 10},
             {typeof(RectColider), 5},
-            {typeof(Wander), 80085 }
+            {typeof(Wander), 80085 },
+            {typeof(MouseSprite), 666}
         };
 
         private int componentIdCounter = 1;

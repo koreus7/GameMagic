@@ -17,6 +17,8 @@ namespace GameMagic
             {
                 this.AddEntity(new TestEntity(this, new Vector2(Rand.Inst.Int(Width), Rand.Inst.Int(Height))));
             }
+
+            this.AddEntity(new MouseEntity(this, Vector2.One));
         }
 
         public MainWorld(GMGame game) : base(game)
