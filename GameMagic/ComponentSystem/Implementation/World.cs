@@ -4,6 +4,7 @@ using System.IO.Pipes;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GameMagic.Components;
 using GameMagic.Logging;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -50,11 +51,30 @@ namespace GameMagic.ComponentSystem.Implementation
 
         public void Draw(GameTime time, SpriteBatch batch)
         {
-            Game.DrawRectangle(new Rectangle(0,0,Width,Height), Color.Black);
-            foreach(IComponent c in components.GetComponents())
+            batch.Begin(0, null, null, null, null, GMGame.lightEffect);
+            foreach (IComponent c in components.GetComponents().Where(x => x.BatchNo == 1))
             {
                 c.Draw(time, batch);
             }
+            batch.End();
+
+
+            
+            foreach (IComponent c in components.GetComponents().Where(x => x.BatchNo == 2))
+            {
+                batch.Begin(0, null, null, null, null, GMGame.vectorEffect);
+                GMGame.vectorEffect.Parameters["vec"].SetValue((c as VectorNode).Val);
+                c.Draw(time, batch);
+                batch.End();
+            }
+            
+
+            batch.Begin();
+            foreach (IComponent c in components.GetComponents().Where(x => x.BatchNo == 0))
+            {
+                c.Draw(time, batch);
+            }
+            batch.End();
         }
 
         public void Update(GameTime time)

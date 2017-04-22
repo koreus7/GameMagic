@@ -64,6 +64,8 @@ namespace GameMagic.Components
             }
         }
 
+        public int BatchNo => 0;
+
         public void Dispose()
         {
             Entity.World.CollisionSystem.UnRegister(this);

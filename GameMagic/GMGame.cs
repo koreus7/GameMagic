@@ -17,8 +17,9 @@ namespace GameMagic
         private World world;
         private KeyboardState newKeyState;
         private KeyboardState oldKeyState;
-        private Effect lightEffect;
-        private Effect post1;
+        public static Effect lightEffect;
+        public static Effect post1;
+        public static Effect vectorEffect;
         RenderTarget2D rt;
 
         public int Width => graphics.GraphicsDevice.Viewport.Width;
@@ -61,6 +62,7 @@ namespace GameMagic
 
             lightEffect = Content.Load<Effect>("fx/Light");
             post1 = Content.Load<Effect>("fx/Post1");
+            vectorEffect = Content.Load<Effect>("fx/Vector");
 
             rt = new RenderTarget2D(GraphicsDevice, graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight, true, graphics.PreferredBackBufferFormat, graphics.PreferredDepthStencilFormat);
 
@@ -123,9 +125,7 @@ namespace GameMagic
             //    SamplerState.PointClamp,DepthStencilState.Default, 
             //    RasterizerState.CullNone, 
             //    lightEffect);
-            spriteBatch.Begin(0, null, null, null, null, lightEffect);
             world.Draw(gameTime, spriteBatch);
-            spriteBatch.End();
 
             GraphicsDevice.SetRenderTarget(null);
             GraphicsDevice.Clear(Color.Black);

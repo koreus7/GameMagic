@@ -13,6 +13,17 @@ namespace GameMagic
     {
         public override void Init()
         {
+            int tilesize = 50;
+
+            for (int i = 0; i < Width; i+= tilesize)
+            {
+                for (int j = 0; j < Height; j+= tilesize)
+                {
+                    this.AddEntity(new ForceNode(this, new Vector2(i, j), new Rectangle(0, 0, tilesize, tilesize)));
+                }
+            }
+
+
             for (int i = 0; i < 50; i++)
             {
                 this.AddEntity(new TestEntity(this, new Vector2(Rand.Inst.Int(Width), Rand.Inst.Int(Height))));

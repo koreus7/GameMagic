@@ -20,13 +20,13 @@ namespace GameMagic.Entities
 
         public override void Init()
         {
-            this.AddNewComponent<Wander>();
             dir = Rand.Inst.Vec2(10);
             var sr = this.AddNewComponent<SpriteRenderer>();
             sr.tex = StaticImg.asprite;
             var r = this.AddNewComponent<RectColider>();
             r.WatchCollisions = true;
             r.rect = new Rectangle(0, 0, sr.tex.Width, sr.tex.Height);
+            this.AddNewComponent<Wander>();
         }
     }
 }

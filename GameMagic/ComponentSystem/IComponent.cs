@@ -15,5 +15,6 @@ namespace GameMagic.ComponentSystem
         void Init();
         void Update(GameTime gameTime);
         void Draw(GameTime gameTime, SpriteBatch spriteBatch);
+        int BatchNo { get; }
     }
 }

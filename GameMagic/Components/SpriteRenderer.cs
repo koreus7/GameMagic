@@ -30,5 +30,7 @@ namespace GameMagic.Components
         {
             spriteBatch.Draw(tex, Entity.Position);
         }
+
+        public int BatchNo => 1;
     }
 }
