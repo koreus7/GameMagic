@@ -14,6 +14,8 @@ sampler TextureSampler = sampler_state
 	Texture = <Texture>;
 };
 
+float3 Col;
+
 // This data comes from the sprite batch vertex shader
 struct VertexShaderOutput
 {
@@ -33,7 +35,7 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 	color.b = value;
 	color.a = 1.0f;
 
-	return color;
+	return color* float4(Col,1.0);
 }
 
 // Compile our shader

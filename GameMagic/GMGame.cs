@@ -57,6 +57,8 @@ namespace GameMagic
 
             lightEffect = Content.Load<Effect>("fx/Light");
 
+            lightEffect.Parameters["Col"].SetValue(new Vector3(0.0f, 0.0f, 1.0f));
+
             world.Init();
         }
 
