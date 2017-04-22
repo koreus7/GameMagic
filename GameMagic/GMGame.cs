@@ -18,6 +18,7 @@ namespace GameMagic
         private KeyboardState newKeyState;
         private KeyboardState oldKeyState;
         private Effect lightEffect;
+        private Effect post1;
         RenderTarget2D rt;
 
         public int Width => graphics.GraphicsDevice.Viewport.Width;
@@ -28,6 +29,8 @@ namespace GameMagic
         public GMGame()
         {
             graphics = new GraphicsDeviceManager(this);
+            graphics.PreferredBackBufferWidth = 1200;
+            graphics.PreferredBackBufferHeight = 720;
             Content.RootDirectory = "Content";
             world = new MainWorld(this);
         }
@@ -57,6 +60,7 @@ namespace GameMagic
             StaticImg.asprite = Content.Load<Texture2D>("img/asprite");
 
             lightEffect = Content.Load<Effect>("fx/Light");
+            post1 = Content.Load<Effect>("fx/Post1");
 
             rt = new RenderTarget2D(GraphicsDevice, graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight, true, graphics.PreferredBackBufferFormat, graphics.PreferredDepthStencilFormat);
 
@@ -108,24 +112,25 @@ namespace GameMagic
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.SetRenderTarget(rt);
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
 
-            lightEffect.Parameters["res"].SetValue(new Vector2(Width, Height));
-          //  lightEffect.Parameters["time"].SetValue(gameTime.TotalGameTime.Milliseconds/1000.0f);
+            //lightEffect.Parameters["res"].SetValue(new Vector2(Width, Height));
+            lightEffect.Parameters["res"].SetValue(Vector2.One);
+            //  lightEffect.Parameters["time"].SetValue(gameTime.TotalGameTime.Milliseconds/1000.0f);
 
             //spriteBatch.Begin(SpriteSortMode.Deferred, 
             //    BlendState.NonPremultiplied, 
             //    SamplerState.PointClamp,DepthStencilState.Default, 
             //    RasterizerState.CullNone, 
             //    lightEffect);
-            spriteBatch.Begin();
+            spriteBatch.Begin(0, null, null, null, null, lightEffect);
             world.Draw(gameTime, spriteBatch);
             spriteBatch.End();
 
             GraphicsDevice.SetRenderTarget(null);
-            GraphicsDevice.Clear(Color.Orange);
+            GraphicsDevice.Clear(Color.Black);
 
-            spriteBatch.Begin(0, null, null, null, null, lightEffect);
+            spriteBatch.Begin(0, null, null, null, null, post1);
             spriteBatch.Draw(rt, new Vector2(0, 0), Color.White);
             spriteBatch.End();
 

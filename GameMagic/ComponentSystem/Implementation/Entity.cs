@@ -13,6 +13,16 @@ namespace GameMagic.ComponentSystem.Implementation
         private readonly World _world;
 
         public Vector2 Position { get; set; }
+        public void SetPosition(int x, int y)
+        {
+           Position = new Vector2(x, y);
+        }
+
+        public void SetPosition(Vector2 pos)
+        {
+            Position = pos;
+        }
+
         public World World => _world;
 
         public Entity(World world, Vector2 pos)

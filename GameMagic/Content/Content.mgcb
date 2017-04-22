@@ -31,3 +31,9 @@
 /processorParam:DebugMode=Auto
 /build:fx/Light.fx
 
+#begin fx/Post1.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:fx/Post1.fx
+

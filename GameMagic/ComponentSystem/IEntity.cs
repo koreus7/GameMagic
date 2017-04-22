@@ -15,6 +15,8 @@ namespace GameMagic.ComponentSystem
         T GetComponent<T>() where T : IComponent;
         T AddNewComponent<T>() where T : IComponent, new();
         Vector2 Position { get; }
+        void SetPosition(int x, int y);
+        void SetPosition(Vector2 pos);
         World World { get; }
     }
 }

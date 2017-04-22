@@ -1,10 +1,10 @@
 ﻿#if OPENGL
-	#define SV_POSITION POSITION
-	#define VS_SHADERMODEL vs_3_0
-	#define PS_SHADERMODEL ps_3_0
+#define SV_POSITION POSITION
+#define VS_SHADERMODEL vs_3_0
+#define PS_SHADERMODEL ps_3_0
 #else
-	#define VS_SHADERMODEL vs_4_0_level_9_1
-	#define PS_SHADERMODEL ps_4_0_level_9_1
+#define VS_SHADERMODEL vs_4_0_level_9_1
+#define PS_SHADERMODEL ps_4_0_level_9_1
 #endif
 
 // Our texture sampler
@@ -16,7 +16,7 @@ sampler TextureSampler = sampler_state
 
 // Uniforms
 //float time;
-float2 res;
+//float2 res;
 
 // This data comes from the sprite batch vertex shader
 struct VertexShaderOutput
@@ -27,32 +27,11 @@ struct VertexShaderOutput
 };
 
 
-float Orb(VertexShaderOutput input)
-{
-    float2 aspect = res/min(res.x,res.y);
-   
-	float2 p = (input.TextureCordinate - 0.5)*aspect*16.0;
-	
-    float c = 1.0/length(p) -0.2;
-
-	c*=step(0.01,c);
-	
-    return c;
-}
-
-
 // Our pixel shader
 float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 {
 	float4 color = tex2D(TextureSampler, input.TextureCordinate);
-
-	float value = 0.299*color.r + 0.587*color.g + 0.114*color.b;
-	color.r = value;
-	color.g = value;
-	color.b = value;
-	color.a = 1.0f;
-    float o = Orb(input);
-	return color*float4(o,o,o,o);
+	return color;
 }
 
 // Compile our shader

@@ -12,12 +12,16 @@ namespace GameMagic.Entities
 {
     class TestEntity : Entity
     {
+        Vector2 dir;
+
         public TestEntity(World world, Vector2 pos) : base(world, pos)
         {
         }
 
         public override void Init()
         {
+            this.AddNewComponent<Wander>();
+            dir = Rand.Inst.Vec2(10);
             var sr = this.AddNewComponent<SpriteRenderer>();
             sr.tex = StaticImg.asprite;
             var r = this.AddNewComponent<RectColider>();
