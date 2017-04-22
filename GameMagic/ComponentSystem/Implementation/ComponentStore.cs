@@ -11,7 +11,8 @@ namespace GameMagic.ComponentSystem.Implementation
 
         private readonly Dictionary<Type, int> ComponentTypeLookup = new Dictionary<Type, int>
         {
-            {typeof(SpriteRenderer), 10}
+            {typeof(SpriteRenderer), 10},
+            {typeof(RectColider), 5}
         };
 
         private int componentIdCounter = 1;

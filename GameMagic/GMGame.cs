@@ -1,7 +1,9 @@
-﻿using GameMagic.ComponentSystem.Implementation;
+﻿using System.Linq;
+using GameMagic.ComponentSystem.Implementation;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Key = OpenTK.Input.Key;
 
 namespace GameMagic
 {
@@ -13,12 +15,16 @@ namespace GameMagic
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         private World world;
+        private KeyboardState newKeyState;
+        private KeyboardState oldKeyState;
+
+        public static bool DebugOverlay = false;
 
         public GMGame()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            world = new MainWorld();
+            world = new MainWorld(this);
         }
 
         /// <summary>
@@ -43,7 +49,7 @@ namespace GameMagic
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            StaticImg.abc = Content.Load<Texture2D>("img/abc");
+            StaticImg.asprite = Content.Load<Texture2D>("img/asprite");
             // TODO: use this.Content to load your game content here
 
             world.Init();
@@ -65,12 +71,26 @@ namespace GameMagic
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+
+            newKeyState = Keyboard.GetState();
+
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            if (KeyPressed(Keys.F3))
+            {
+                DebugOverlay = !DebugOverlay;
+            }
+
             world.Update(gameTime);
 
+            oldKeyState = newKeyState;
             base.Update(gameTime);
+        }
+
+        private bool KeyPressed(Keys k)
+        {
+            return newKeyState.IsKeyDown(k) && oldKeyState.IsKeyUp(k);
         }
 
         /// <summary>
@@ -84,6 +104,18 @@ namespace GameMagic
             world.Draw(gameTime, spriteBatch);
 
             base.Draw(gameTime);
+        }
+
+        private static Texture2D rect;
+
+        public void DrawRectangle(Rectangle coords, Color color)
+        {
+            if (rect == null)
+            {
+                rect = new Texture2D(GraphicsDevice, 1, 1);
+                rect.SetData(new[] { Color.White });
+            }
+            spriteBatch.Draw(rect, coords, color);
         }
     }
 }

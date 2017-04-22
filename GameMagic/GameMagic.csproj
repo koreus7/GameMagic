@@ -38,6 +38,8 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="CollisionSystem.cs" />
+    <Compile Include="ColorExtensions.cs" />
     <Compile Include="ComponentSystem\IComponent.cs" />
     <Compile Include="ComponentSystem\IComponentLocator.cs" />
     <Compile Include="ComponentSystem\IComponentPool.cs" />
@@ -50,6 +52,7 @@
     <Compile Include="ComponentSystem\Implementation\Entity.cs" />
     <Compile Include="ComponentSystem\Implementation\World.cs" />
     <Compile Include="ComponentSystem\IPoolableComponent.cs" />
+    <Compile Include="Components\RectColider.cs" />
     <Compile Include="Components\SpriteRenderer.cs" />
     <Compile Include="Entities\TestEntity.cs" />
     <Compile Include="GMGame.cs" />
@@ -59,6 +62,7 @@
     <Compile Include="MainWorld.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QuadTree.cs" />
     <Compile Include="StaticImg.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -16,9 +16,14 @@ namespace GameMagic.ComponentSystem.Implementation
         private Dictionary<int, Entity> entities;
         private int entityIDCounter = 1;
 
-        public World()
+        public CollisionSystem CollisionSystem { get; set; }
+        public GMGame Game { get; private set; }
+
+        public World(GMGame game)
         {
+            Game = game;
             components = new ComponentStore();
+            CollisionSystem = new CollisionSystem();
             entities = new Dictionary<int, Entity>();
         }
 
@@ -53,6 +58,8 @@ namespace GameMagic.ComponentSystem.Implementation
 
         public void Update(GameTime time)
         {
+            CollisionSystem.Clear();
+
             foreach (IComponent c in components.GetComponents())
             {
                 c.Update(time);

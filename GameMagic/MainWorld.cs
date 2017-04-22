@@ -16,5 +16,9 @@ namespace GameMagic
             this.AddEntity(new TestEntity(this, Vector2.One));
             this.AddEntity(new TestEntity(this, new Vector2(100,100)));
         }
+
+        public MainWorld(GMGame game) : base(game)
+        {
+        }
     }
 }

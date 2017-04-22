@@ -9,6 +9,6 @@ namespace GameMagic
 {
     public static class StaticImg
     {
-        public static Texture2D abc;
+        public static Texture2D asprite;
     }
 }

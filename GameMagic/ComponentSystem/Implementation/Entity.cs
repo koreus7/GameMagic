@@ -13,6 +13,7 @@ namespace GameMagic.ComponentSystem.Implementation
         private readonly World _world;
 
         public Vector2 Position { get; set; }
+        public World World => _world;
 
         public Entity(World world, Vector2 pos)
         {

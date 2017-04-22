@@ -19,7 +19,9 @@ namespace GameMagic.Entities
         public override void Init()
         {
             var sr = this.AddNewComponent<SpriteRenderer>();
-            sr.tex = StaticImg.abc;
+            sr.tex = StaticImg.asprite;
+            var r = this.AddNewComponent<RectColider>();
+            r.rect = new Rectangle(0, 0, sr.tex.Width, sr.tex.Height);
         }
     }
 }
