@@ -20,6 +20,8 @@ namespace GameMagic
         public static Effect lightEffect;
         public static Effect post1;
         public static Effect mouseEffect;
+        public static Effect repelatronEffect;
+        public static Effect hubEffect;
         RenderTarget2D rt;
 
         public int Width => graphics.GraphicsDevice.Viewport.Width;
@@ -32,6 +34,7 @@ namespace GameMagic
             graphics = new GraphicsDeviceManager(this);
             graphics.PreferredBackBufferWidth = 1200;
             graphics.PreferredBackBufferHeight = 720;
+            graphics.ToggleFullScreen();
             Content.RootDirectory = "Content";
             world = new MainWorld(this);
         }
@@ -59,11 +62,13 @@ namespace GameMagic
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             StaticImg.asprite = Content.Load<Texture2D>("img/asprite");
+            StaticImg.sprite512 = Content.Load<Texture2D>("img/sprite512");
 
             lightEffect = Content.Load<Effect>("fx/Light");
             post1 = Content.Load<Effect>("fx/Post1");
             mouseEffect = Content.Load<Effect>("fx/Mouse");
-
+            repelatronEffect = Content.Load<Effect>("fx/Repelatron");
+            hubEffect = Content.Load<Effect>("fx/Hub");
             rt = new RenderTarget2D(GraphicsDevice, graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight, true, graphics.PreferredBackBufferFormat, graphics.PreferredDepthStencilFormat);
 
             world.Init();
@@ -85,7 +90,6 @@ namespace GameMagic
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-
             newKeyState = Keyboard.GetState();
             
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))

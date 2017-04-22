@@ -16,7 +16,9 @@ namespace GameMagic.Components
         public IEntity Entity { get; set; }
 
         public Texture2D tex { get; set; }
-        
+
+        public bool Center { get; set; } = false;
+
 
         public void Init()
         {
@@ -28,9 +30,17 @@ namespace GameMagic.Components
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(tex, Entity.Position);
+            if (Center)
+            {
+                spriteBatch.Draw(tex, Entity.Position - new Vector2(tex.Width, tex.Height)*0.5f);
+            }
+            else
+            {
+                spriteBatch.Draw(tex, Entity.Position);
+            }
+
         }
 
-        public int BatchNo => 1;
+        public int BatchNo { get; set; } = 1;
     }
 }

@@ -10,5 +10,6 @@ namespace GameMagic
     public static class StaticImg
     {
         public static Texture2D asprite;
+        public static Texture2D sprite512;
     }
 }

@@ -28,7 +28,7 @@ namespace GameMagic.Components
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             MouseState m = Mouse.GetState();
-            spriteBatch.Draw(StaticImg.asprite, new Vector2(m.X,m.Y));
+            spriteBatch.Draw(StaticImg.asprite, new Vector2(m.X,m.Y) -  new Vector2(StaticImg.asprite.Width, StaticImg.asprite.Height) *0.5f);
         }
 
         public int BatchNo => 2;

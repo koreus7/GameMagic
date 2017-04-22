@@ -1,10 +1,10 @@
 ﻿#if OPENGL
-	#define SV_POSITION POSITION
-	#define VS_SHADERMODEL vs_3_0
-	#define PS_SHADERMODEL ps_3_0
+#define SV_POSITION POSITION
+#define VS_SHADERMODEL vs_3_0
+#define PS_SHADERMODEL ps_3_0
 #else
-	#define VS_SHADERMODEL vs_4_0_level_9_1
-	#define PS_SHADERMODEL ps_4_0_level_9_1
+#define VS_SHADERMODEL vs_4_0_level_9_1
+#define PS_SHADERMODEL ps_4_0_level_9_1
 #endif
 
 // Our texture sampler
@@ -38,17 +38,17 @@ float2 reduxino(float2 pos, float redux) {
 
 float Orb(VertexShaderOutput input)
 {
-    float2 aspect = res/min(res.x,res.y);
-   
+	float2 aspect = res / min(res.x, res.y);
+
 	float2 p = (input.TextureCordinate - 0.5)*aspect*16.0;
 
 	//p = reduxino(p, 0.5*(sin(time) + 1.0) *0.5);
-	
-    float c = 1.0/length(0.9*p + 0.1*p*abs(sin(time/5.0)) ) -0.2;
 
-	c*=step(0.01,c);
-	
-    return c;
+	float c = 1.0 / length(0.9*p + 0.1*p*abs(sin(time / 5.0))) - 0.2;
+
+	c *= step(0.01, c);
+
+	return c;
 }
 
 
@@ -62,8 +62,8 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 	color.g = value;
 	color.b = value;
 	color.a = 1.0f;
-    float o = Orb(input);
-	return color*float4(o,o,o,o);
+	float o = Orb(input);
+	return color*float4(0.0,0.0,o,o);
 }
 
 // Compile our shader

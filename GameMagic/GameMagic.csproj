@@ -56,7 +56,9 @@
     <Compile Include="Components\RectColider.cs" />
     <Compile Include="Components\SpriteRenderer.cs" />
     <Compile Include="Components\Wander.cs" />
+    <Compile Include="Entities\Hub.cs" />
     <Compile Include="Entities\MouseEntity.cs" />
+    <Compile Include="Entities\Repelatron.cs" />
     <Compile Include="Entities\TestEntity.cs" />
     <Compile Include="GMGame.cs" />
     <Compile Include="Logger.cs" />

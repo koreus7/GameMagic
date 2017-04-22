@@ -6,26 +6,24 @@ using System.Threading.Tasks;
 using GameMagic.Components;
 using GameMagic.ComponentSystem.Implementation;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace GameMagic.Entities
 {
-    class TestEntity : Entity
+    class Repelatron : Entity
     {
-
-        public TestEntity(World world, Vector2 pos) : base(world, pos)
+        public Repelatron(World world, Vector2 pos) : base(world, pos)
         {
         }
 
         public override void Init()
-        { 
+        {
             var sr = this.AddNewComponent<SpriteRenderer>();
+            sr.BatchNo = 5;
             sr.tex = StaticImg.asprite;
             sr.Center = true;
             var r = this.AddNewComponent<RectColider>();
             r.WatchCollisions = true;
-            r.rect = new Rectangle(-sr.tex.Width/2, -sr.tex.Height/2, sr.tex.Width, sr.tex.Height);
-            this.AddNewComponent<Wander>();
+            r.rect = new Rectangle(-sr.tex.Width/2, -sr.tex.Height/2, sr.tex.Width + 50, sr.tex.Height + 50);
         }
     }
 }
