@@ -18,6 +18,9 @@ namespace GameMagic
         private KeyboardState newKeyState;
         private KeyboardState oldKeyState;
 
+        public int Width => graphics.GraphicsDevice.Viewport.Width;
+        public int Height => graphics.GraphicsDevice.Viewport.Height;
+
         public static bool DebugOverlay = false;
 
         public GMGame()
@@ -73,7 +76,7 @@ namespace GameMagic
         {
 
             newKeyState = Keyboard.GetState();
-
+            
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 

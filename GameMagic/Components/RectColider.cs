@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace GameMagic.Components
 {
-    public class RectColider : IComponent
+    public class RectColider : IComponent, IDisposable
     {
         public int ID { get; set; }
 
@@ -30,23 +30,43 @@ namespace GameMagic.Components
                 _rect.Height);  }
         }
 
+        public bool WatchCollisions { get; set; } = false;
 
         public void Init()
         {
-            
+            Entity.World.CollisionSystem.Register(this);
+        }
+
+
+        private  List<RectColider> _collisions = new List<RectColider>();
+
+        public List<RectColider> Collisions => _collisions;
+
+        public void UpdateCollisions()
+        {
+            if (WatchCollisions)
+            {
+                Entity.World.CollisionSystem.GetCollisions(this, ref _collisions);
+               // Logger.Log($"Rect Collider ID:{ID} Collisions: {_collisions.Count}");
+            }
         }
 
         public void Update(GameTime gameTime)
         {
-            Entity.World.CollisionSystem.AddRect(this);
         }
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             if (GMGame.DebugOverlay)
             {
-                Entity.World.Game.DrawRectangle(WorldRect, Color.Red.MultiplyAlpha(0.2f));
+                float a = (float)Math.Min(Collisions.Count/5.0f, 1.0f);
+                Entity.World.Game.DrawRectangle(WorldRect, Color.Red.MultiplyAlpha(a));
             }
+        }
+
+        public void Dispose()
+        {
+            Entity.World.CollisionSystem.UnRegister(this);
         }
     }
 }

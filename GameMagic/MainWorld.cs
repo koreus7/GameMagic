@@ -13,8 +13,10 @@ namespace GameMagic
     {
         public override void Init()
         {
-            this.AddEntity(new TestEntity(this, Vector2.One));
-            this.AddEntity(new TestEntity(this, new Vector2(100,100)));
+            for (int i = 0; i < 50; i++)
+            {
+                this.AddEntity(new TestEntity(this, new Vector2(Rand.Inst.Int(Width), Rand.Inst.Int(Height))));
+            }
         }
 
         public MainWorld(GMGame game) : base(game)

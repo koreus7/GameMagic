@@ -24,7 +24,6 @@ namespace GameMagic.Components
 
         public void Update(GameTime gameTime)
         {
-            Logger.Log("Sprite Renderer " + ID + "update");
         }
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)

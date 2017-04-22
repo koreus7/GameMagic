@@ -10,15 +10,44 @@ namespace GameMagic
     public class CollisionSystem
     {
         private QuadTree<RectColider> quadTree;
+        private Dictionary<int, RectColider> registeredColliders = new Dictionary<int, RectColider>(); 
 
         public CollisionSystem()
         {
             quadTree = new QuadTree<RectColider>(4,0,0,5000,5000);
         }
 
+        public void Register(RectColider collider)
+        {
+            registeredColliders[collider.ID] = collider;
+        }
+
+        public void UnRegister(RectColider colider)
+        {
+            registeredColliders.Remove(colider.ID);
+        }
+
         public void AddRect(RectColider collider)
         {
             quadTree.Insert(collider, collider.WorldRect.X, collider.WorldRect.Y, collider.WorldRect.Width, collider.WorldRect.Height);
+        }
+
+        public bool GetCollisions(RectColider collider, ref List<RectColider> results)
+        {
+            return quadTree.FindCollisions(collider, ref results);
+        }
+
+        public void Populate()
+        {
+            foreach (KeyValuePair<int, RectColider> kvp in registeredColliders )
+            {
+                AddRect(kvp.Value);
+            }
+
+            foreach (KeyValuePair<int, RectColider> kvp in registeredColliders)
+            {
+                kvp.Value.UpdateCollisions();
+            }
         }
 
         public void Clear()
