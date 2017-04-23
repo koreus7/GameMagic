@@ -73,6 +73,15 @@ namespace GameMagic.ComponentSystem.Implementation
 
         public void Draw(GameTime time, SpriteBatch batch)
         {
+
+            batch.Begin(0, null, null, null, null, GMGame.boostEffect);
+            foreach (IComponent c in components.GetComponents().Where(x => x.BatchNo == 20))
+            {
+                c.Draw(time, batch);
+            }
+            batch.End();
+
+
             GMGame.lightEffect.Parameters["time"].SetValue(time.TotalGameTime.Milliseconds/1000.0f);
             GMGame.lightEffect.Parameters["col"].SetValue(new Vector4(1.0f,1.0f,1.0f,1.0f));
             batch.Begin(0, null, null, null, null, GMGame.lightEffect);
@@ -132,6 +141,13 @@ namespace GameMagic.ComponentSystem.Implementation
                 c.Draw(time, batch);
             }
             batch.End();
+
+            batch.Begin();
+            foreach (IComponent c in components.GetComponents().Where(x => x.BatchNo == 99))
+            {
+                c.Draw(time, batch);
+            }
+            batch.End();
         }
 
 
@@ -153,6 +169,9 @@ namespace GameMagic.ComponentSystem.Implementation
                     break;
                 case 4:
                     this.AddEntity(new Source(this, pos));
+                    break;
+                case 5:
+                    this.AddEntity(new SpeedBoost(this, pos));
                     break;
             }
         }
@@ -179,9 +198,20 @@ namespace GameMagic.ComponentSystem.Implementation
             {
                 return 4;
             }
+            if (e is SpeedBoost)
+            {
+                return 5;
+            }
 
             return -1;
             
+        }
+
+        public void AddEntAtMouse(Entity e)
+        {
+            MouseState ms = Mouse.GetState();
+            e.Position = new Vector2(ms.X, ms.Y);
+            this.AddEntity(e);
         }
 
         private class LevelData

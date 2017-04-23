@@ -22,7 +22,8 @@ namespace GameMagic.Components
 
         public void Update(GameTime gameTime)
         {
-         
+            MouseState m = Mouse.GetState();
+            Entity.SetPosition(m.X, m.Y);
         }
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)

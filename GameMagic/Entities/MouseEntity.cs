@@ -18,6 +18,7 @@ namespace GameMagic.Entities
         public override void Init()
         {
             this.AddNewComponent<MouseSprite>();
+            this.AddNewComponent<SelectionMenu>();
         }
     }
 }

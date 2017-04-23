@@ -12,5 +12,8 @@ namespace GameMagic
         public static Texture2D asprite;
         public static Texture2D sprite512;
         public static Texture2D sprite1024;
+
+        public static Texture2D expandIcon;
+        public static Texture2D counterClockwise;
     }
 }

@@ -26,6 +26,10 @@ namespace GameMagic
         public static Effect hubEffect;
         public static Effect sinkEffect;
         public static Effect colliderEffect;
+        public static Effect boostEffect;
+
+        public static SpriteFont mainFont;
+
         RenderTarget2D rt;
 
         public int Width => graphics.GraphicsDevice.Viewport.Width;
@@ -72,6 +76,9 @@ namespace GameMagic
             StaticImg.sprite512 = Content.Load<Texture2D>("img/sprite512");
             StaticImg.sprite1024 = Content.Load<Texture2D>("img/sprite1024");
 
+            StaticImg.expandIcon = Content.Load<Texture2D>("img/expandIcon");
+            StaticImg.counterClockwise = Content.Load<Texture2D>("img/CounterClockwise");
+
             StaticSound.absorb = Content.Load<SoundEffect>("snd/Absorb");
 
             lightEffect = Content.Load<Effect>("fx/Light");
@@ -81,6 +88,10 @@ namespace GameMagic
             hubEffect = Content.Load<Effect>("fx/Hub");
             sinkEffect = Content.Load<Effect>("fx/Sink");
             colliderEffect = Content.Load<Effect>("fx/Collider");
+            boostEffect = Content.Load<Effect>("fx/Boost");
+
+            mainFont = Content.Load<SpriteFont>("fnt/mainFont");
+
             rt = new RenderTarget2D(GraphicsDevice, graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight, true, graphics.PreferredBackBufferFormat, graphics.PreferredDepthStencilFormat);
 
             world.Init();
@@ -138,6 +149,10 @@ namespace GameMagic
             {
                 world.AddEntity(new Planet(world, new Vector2(ms.X, ms.Y)));
             }
+            if (KeyPressed(Keys.R))
+            {
+                world.AddEntity(new SpeedBoost(world, new Vector2(ms.X, ms.Y)));
+            }
             if (KeyPressed(Keys.S))
             {
                 world.AddEntity(new Source(world, new Vector2(ms.X, ms.Y)));
@@ -146,6 +161,7 @@ namespace GameMagic
             {
                 world.AddEntity(new Sink(world, new Vector2(ms.X, ms.Y)));
             }
+            
 
 
             world.Update(gameTime);

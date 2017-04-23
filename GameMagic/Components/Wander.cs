@@ -53,6 +53,8 @@ namespace GameMagic.Components
                 dir += delta.Normalized() * 35.0f * mod;
             }
 
+            bool boost = false;
+
             foreach (RectColider.CollisionResult res in rect.Collisions)
             {
 
@@ -118,8 +120,17 @@ namespace GameMagic.Components
 
                     dir += tangent*10.0f;
                 }
+                else if (colider.Entity is SpeedBoost)
+                {
+                    boost = true;
+                }
             }
-            
+
+            if (boost)
+            {
+                dir *= 5.0f;
+            }
+
 
             Vector2 projected = Entity.Position + dir*0.01f*gameTime.ElapsedGameTime.Milliseconds;
             if (projected.X - rect.rect.Width/2.0f > Entity.World.Width)
