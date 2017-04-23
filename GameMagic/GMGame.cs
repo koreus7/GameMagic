@@ -22,6 +22,7 @@ namespace GameMagic
         public static Effect mouseEffect;
         public static Effect repelatronEffect;
         public static Effect hubEffect;
+        public static Effect sinkEffect;
         RenderTarget2D rt;
 
         public int Width => graphics.GraphicsDevice.Viewport.Width;
@@ -73,6 +74,7 @@ namespace GameMagic
             mouseEffect = Content.Load<Effect>("fx/Mouse");
             repelatronEffect = Content.Load<Effect>("fx/Repelatron");
             hubEffect = Content.Load<Effect>("fx/Hub");
+            sinkEffect = Content.Load<Effect>("fx/Sink");
             rt = new RenderTarget2D(GraphicsDevice, graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight, true, graphics.PreferredBackBufferFormat, graphics.PreferredDepthStencilFormat);
 
             world.Init();

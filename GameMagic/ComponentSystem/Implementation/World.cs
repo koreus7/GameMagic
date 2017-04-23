@@ -95,6 +95,15 @@ namespace GameMagic.ComponentSystem.Implementation
                 c.Draw(time, batch);
             }
             batch.End();
+
+
+            GMGame.sinkEffect.Parameters["res"].SetValue(new Vector2(1, 1));
+            batch.Begin(0, null, null, null, null, GMGame.sinkEffect);
+            foreach (IComponent c in components.GetComponents().Where(x => x.BatchNo == 7))
+            {
+                c.Draw(time, batch);
+            }
+            batch.End();
         }
 
         public void Update(GameTime time)

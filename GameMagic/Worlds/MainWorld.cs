@@ -20,7 +20,7 @@ namespace GameMagic
             }
 
             this.AddEntity(new MouseEntity(this, Vector2.One));
-            this.AddEntity(new Source(this, new Vector2(Width/2.0f, Height/2.0f)));
+            this.AddEntity(new Sink(this, new Vector2(Width/2.0f, Height/2.0f)));
         }
 
         public MainWorld(GMGame game) : base(game)

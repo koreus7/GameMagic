@@ -79,3 +79,9 @@
 /processorParam:TextureFormat=Color
 /build:img/sprite1024.png
 
+#begin fx/Sink.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:fx/Sink.fx
+
