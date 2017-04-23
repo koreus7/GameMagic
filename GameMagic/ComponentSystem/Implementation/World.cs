@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO.Pipes;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using GameMagic.Components;
@@ -10,6 +11,9 @@ using GameMagic.Logging;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using OpenTK;
+using Vector2 = Microsoft.Xna.Framework.Vector2;
+using Vector4 = Microsoft.Xna.Framework.Vector4;
 
 namespace GameMagic.ComponentSystem.Implementation
 {
@@ -115,6 +119,94 @@ namespace GameMagic.ComponentSystem.Implementation
             batch.End();
         }
 
+
+        public void AddEnt(Vector2 pos, int type)
+        {
+            switch (type)
+            {
+                case 0:
+                    this.AddEntity(new Hub(this, pos));
+                    break;
+                case 1:
+                    this.AddEntity(new Planet(this, pos));
+                    break;
+                case 2:
+                    this.AddEntity(new Repelatron(this, pos));
+                    break;
+                case 3:
+                    this.AddEntity(new Sink(this, pos));
+                    break;
+                case 4:
+                    this.AddEntity(new Source(this, pos));
+                    break;
+            }
+        }
+
+        public int GetEntType(Entity e)
+        {
+            if (e is Hub)
+            {
+                return 0;
+            }
+            if (e is Planet)
+            {
+                return 1;
+            }
+            if (e is Repelatron)
+            {
+                return 2;
+            }
+            if (e is Sink)
+            {
+                return 3;
+            }
+            if (e is Source)
+            {
+                return 4;
+            }
+
+            return -1;
+            
+        }
+
+        private class LevelData
+        {
+            public List<Vector2> Positions { get; set; } = new List<Vector2>();
+            public List<int> EntityTypes { get; set; } = new List<int>();
+        }
+
+        public void Save()
+        {
+            LevelData data = new LevelData();
+            foreach (KeyValuePair<int, Entity> keyValuePair in entities)
+            {
+                int type = GetEntType(keyValuePair.Value);
+
+                if (type != -1)
+                {
+                    data.Positions.Add(keyValuePair.Value.Position);
+                    data.EntityTypes.Add(type);
+                }
+            }
+
+            string serialised = Newtonsoft.Json.JsonConvert.SerializeObject(data);
+
+            System.IO.File.WriteAllText(@"C:\Users\Public\Level.json", serialised);
+        }
+
+        public void Load()
+        {
+            string text = System.IO.File.ReadAllText(@"C:\Users\Public\Level.json");
+
+            LevelData data = Newtonsoft.Json.JsonConvert.DeserializeObject<LevelData>(text);
+
+            for (int i = 0; i < data.EntityTypes.Count; i++)
+            {
+                AddEnt(data.Positions[i], data.EntityTypes[i]);
+            }
+
+        }
+
         public void Update(GameTime time)
         {
 
@@ -125,17 +217,6 @@ namespace GameMagic.ComponentSystem.Implementation
             foreach (IComponent c in components.GetComponents())
             {
                 c.Update(time);
-            }
-
-            if (ms.MiddleButton == ButtonState.Released && lastMouse.MiddleButton == ButtonState.Pressed)
-            {
-                this.AddEntity(new Hub(this, new Vector2(ms.X, ms.Y)));
-            }
-
-
-            if (ms.RightButton == ButtonState.Released && lastMouse.RightButton == ButtonState.Pressed)
-            {
-                this.AddEntity(new Repelatron(this, new Vector2(ms.X, ms.Y)));
             }
 
             lastMouse = ms;

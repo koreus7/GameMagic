@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using GameMagic.ComponentSystem.Implementation;
+using GameMagic.Entities;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -106,6 +107,41 @@ namespace GameMagic
             {
                 DebugOverlay = !DebugOverlay;
             }
+
+            if (KeyPressed(Keys.F5))
+            {
+                world.Save();
+            }
+
+            if (KeyPressed(Keys.F6))
+            {
+                world.Load();
+            }
+
+
+            MouseState ms = Mouse.GetState();
+
+            if (KeyPressed(Keys.Q))
+            {
+                world.AddEntity(new Hub(world, new Vector2(ms.X, ms.Y)));
+            }
+            if (KeyPressed(Keys.W))
+            {
+                world.AddEntity(new Repelatron(world, new Vector2(ms.X, ms.Y)));
+            }
+            if (KeyPressed(Keys.E))
+            {
+                world.AddEntity(new Planet(world, new Vector2(ms.X, ms.Y)));
+            }
+            if (KeyPressed(Keys.S))
+            {
+                world.AddEntity(new Source(world, new Vector2(ms.X, ms.Y)));
+            }
+            if (KeyPressed(Keys.D))
+            {
+                world.AddEntity(new Sink(world, new Vector2(ms.X, ms.Y)));
+            }
+
 
             world.Update(gameTime);
 
