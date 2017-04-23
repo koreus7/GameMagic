@@ -154,7 +154,7 @@ namespace GameMagic
             base.Update(gameTime);
         }
 
-        private bool KeyPressed(Keys k)
+        public bool KeyPressed(Keys k)
         {
             return newKeyState.IsKeyDown(k) && oldKeyState.IsKeyUp(k);
         }

@@ -10,10 +10,10 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace GameMagic.Entities
 {
-    class TestEntity : Entity
+    class Orb : Entity
     {
 
-        public TestEntity(World world, Vector2 pos) : base(world, pos)
+        public Orb(World world, Vector2 pos) : base(world, pos)
         {
         }
 

@@ -54,6 +54,7 @@
     <Compile Include="ComponentSystem\IPoolableComponent.cs" />
     <Compile Include="Components\MouseSprite.cs" />
     <Compile Include="Components\Nanny.cs" />
+    <Compile Include="Components\OrbEmiter.cs" />
     <Compile Include="Components\RectColider.cs" />
     <Compile Include="Components\SpriteRenderer.cs" />
     <Compile Include="Components\Wander.cs" />
@@ -64,7 +65,7 @@
     <Compile Include="Entities\Repelatron.cs" />
     <Compile Include="Entities\Sink.cs" />
     <Compile Include="Entities\Source.cs" />
-    <Compile Include="Entities\TestEntity.cs" />
+    <Compile Include="Entities\Orb.cs" />
     <Compile Include="GMGame.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="Logging\ConsoleLogger.cs" />

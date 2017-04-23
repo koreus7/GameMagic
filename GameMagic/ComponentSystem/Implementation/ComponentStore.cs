@@ -15,7 +15,8 @@ namespace GameMagic.ComponentSystem.Implementation
             {typeof(RectColider), 5},
             {typeof(Wander), 80085 },
             {typeof(MouseSprite), 666},
-            {typeof(Nanny),777 }
+            {typeof(Nanny),777 },
+            {typeof(OrbEmiter), 888 }
         };
             
         private int componentIdCounter = 1;

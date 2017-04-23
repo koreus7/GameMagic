@@ -21,10 +21,12 @@ namespace GameMagic.ComponentSystem.Implementation
     {
         private readonly ComponentStore components;
         private Dictionary<int, Entity> entities;
+        private List<Entity> toBeAdded; 
         private MouseState lastMouse;
         private int entityIDCounter = 1;
         public int Width => Game.Width;
         public int Height => Game.Height;
+        private bool updating = false;
 
         public CollisionSystem CollisionSystem { get; set; }
         public GMGame Game { get; private set; }
@@ -35,6 +37,7 @@ namespace GameMagic.ComponentSystem.Implementation
             components = new ComponentStore();
             CollisionSystem = new CollisionSystem();
             entities = new Dictionary<int, Entity>();
+            toBeAdded = new List<Entity>();
         }
 
         public T GetComponent<T>(int entityId) where T : IComponent
@@ -50,10 +53,22 @@ namespace GameMagic.ComponentSystem.Implementation
         public T AddEntity<T>(T e) where T : Entity
         {
             e.ID = entityIDCounter;
+            entityIDCounter++;
+            if (!updating)
+            {
+                InitAndAdd(e);
+            }
+            else
+            {
+                toBeAdded.Add(e);
+            }
+            return e;
+        }
+
+        private void InitAndAdd(Entity e)
+        {
             e.Init();
             entities[e.ID] = e;
-            entityIDCounter++;
-            return e;
         }
 
         public void Draw(GameTime time, SpriteBatch batch)
@@ -209,7 +224,7 @@ namespace GameMagic.ComponentSystem.Implementation
 
         public void Update(GameTime time)
         {
-
+            updating = true;
             MouseState ms = Mouse.GetState();
             
             CollisionSystem.Clear();
@@ -220,6 +235,14 @@ namespace GameMagic.ComponentSystem.Implementation
             }
 
             lastMouse = ms;
+            updating = false;
+
+            foreach (Entity entity in toBeAdded)
+            {
+                InitAndAdd(entity);
+            }
+
+            toBeAdded.Clear();
         }
 
         public virtual void Init()

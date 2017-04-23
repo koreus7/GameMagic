@@ -25,7 +25,10 @@ namespace GameMagic.Entities
             r.WatchCollisions = true;
             r.rect = new Rectangle(0, 0, 350, 350);
             var nanny = this.AddNewComponent<Nanny>();
-            nanny.AddChild(new HubCollider(this.World, this.Position));
+
+            var child = new HubCollider(this.World, this.Position);
+            World.AddEntity(child);
+            nanny.AddChild(child);
         }
     }
 }

@@ -58,7 +58,7 @@ namespace GameMagic.Components
 
                 RectColider colider = res.Collider;
 
-                if (colider.Entity is TestEntity)
+                if (colider.Entity is Orb)
                 {
                     Vector2 delta = (colider.Entity.Position - Entity.Position);
                     if (delta.LengthSquared() < 10)
