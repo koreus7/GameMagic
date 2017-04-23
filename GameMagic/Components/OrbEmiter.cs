@@ -31,10 +31,10 @@ namespace GameMagic.Components
 
         public void Update(GameTime gameTime)
         {
-            if (Entity.World.Game.KeyPressed(Keys.Space))
-            {
-                Emit();
-            }
+            //if (Entity.World.Game.KeyPressed(Keys.Space))
+            //{
+            //    Emit();
+            //}
         }
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)

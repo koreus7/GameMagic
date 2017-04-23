@@ -234,6 +234,7 @@ namespace GameMagic.ComponentSystem.Implementation
         {
             public List<Vector2> Positions { get; set; } = new List<Vector2>();
             public List<int> EntityTypes { get; set; } = new List<int>();
+            public List<int> Supplies { get; set; } = new List<int>();
         }
 
         public void Save()
@@ -268,6 +269,8 @@ namespace GameMagic.ComponentSystem.Implementation
             }
 
             this.AddEntity(new MouseEntity(this, Vector2.One));
+
+            SelectionMenu.Inst.UpdateCounts(data.Supplies);
 
         }
 

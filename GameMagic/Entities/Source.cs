@@ -25,7 +25,12 @@ namespace GameMagic.Entities
             r.WatchCollisions = true;
             r.rect = new Rectangle(0, 0, 200, 200);
 
-            this.AddNewComponent<OrbEmiter>();
+            var emitter = this.AddNewComponent<OrbEmiter>();
+
+            for (int i = 0; i < 50; i++)
+            {
+                emitter.Emit();
+            }
         }
 
     }

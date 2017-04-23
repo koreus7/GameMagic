@@ -50,7 +50,7 @@ namespace GameMagic.Components
             {
                 Vector2 delta = new Vector2(m.X - Entity.Position.X, m.Y - Entity.Position.Y);
                 float mod = Math.Min(delta.LengthSquared(), 100.0f) / 100.0f;
-                dir += delta.Normalized() * 20.0f * mod;
+                dir += delta.Normalized() * 24.0f * mod;
             }
 
             bool boost = false;
@@ -88,7 +88,7 @@ namespace GameMagic.Components
                     if (delta.LengthSquared() < 80000.0f)
                     {
                         float mod = Math.Min(delta.LengthSquared(), 200.0f) / 200.0f;
-                        dir += delta.Normalized() * 28.0f * mod;
+                        dir += delta.Normalized() * 24.0f * mod;
                     }
                 }
                 else if (colider.Entity is HubCollider)

@@ -29,7 +29,7 @@ namespace GameMagic.Components
             items.Add(new SelectionMenuItem
             {
                 Image = StaticImg.expandIcon,
-                Count =  4,
+                Count =  999,
                 Action = () =>
                 {
                     Entity.World.AddEntAtMouse(new Repelatron(Entity.World, Vector2.One));
@@ -39,17 +39,17 @@ namespace GameMagic.Components
             items.Add(new SelectionMenuItem
             {
                 Image = StaticImg.counterClockwise,
-                Count = 0,
+                Count = 999,
                 Action = () =>
                 {
-                    Entity.World.AddEntAtMouse(new Planet(Entity.World, Vector2.One));
+                      Entity.World.AddEntAtMouse(new Planet(Entity.World, Vector2.One));
                 }
             });
 
             items.Add(new SelectionMenuItem
             {
                 Image = StaticImg.clockwise,
-                Count = 0,
+                Count = 999,
                 Action = () =>
                 {
                     Entity.World.AddEntAtMouse(new ReversePlanet(Entity.World, Vector2.One));
@@ -60,12 +60,25 @@ namespace GameMagic.Components
             items.Add(new SelectionMenuItem
             {
                 Image = StaticImg.speed,
-                Count = 0,
+                Count = 999,
                 Action = () =>
                 {
                     Entity.World.AddEntAtMouse(new SpeedBoost(Entity.World, Vector2.One));
                 }
             });
+
+            Inst = this;
+        }
+
+        public static SelectionMenu Inst;
+
+
+        public void UpdateCounts(List<int> counts)
+        {
+            for (int i = 0; i < counts.Count; i++)
+            {
+                items[i].Count = counts[i];
+            }
         }
 
         public void Update(GameTime gameTime)

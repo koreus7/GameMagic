@@ -23,7 +23,7 @@ namespace GameMagic.Entities
             sr.Center = true;
             var r = this.AddNewComponent<RectColider>();
             r.WatchCollisions = true;
-            r.rect = new Rectangle(0,0,200,200);
+            r.rect = new Rectangle(0,0,250,250);
         }
     }
 }
