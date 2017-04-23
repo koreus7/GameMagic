@@ -182,6 +182,9 @@ namespace GameMagic.ComponentSystem.Implementation
                 case 5:
                     this.AddEntity(new SpeedBoost(this, pos));
                     break;
+                case 6:
+                    this.AddEntity(new ReversePlanet(this, pos));
+                    break;
             }
         }
 
@@ -210,6 +213,10 @@ namespace GameMagic.ComponentSystem.Implementation
             if (e is SpeedBoost)
             {
                 return 5;
+            }
+            if (e is ReversePlanet)
+            {
+                return 6;
             }
 
             return -1;

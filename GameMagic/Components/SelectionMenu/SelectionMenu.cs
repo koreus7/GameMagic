@@ -22,6 +22,8 @@ namespace GameMagic.Components
 
         private int selectedIndex = 0;
 
+        private bool visible;
+
         public void Init()
         {
             items.Add(new SelectionMenuItem
@@ -68,42 +70,50 @@ namespace GameMagic.Components
 
         public void Update(GameTime gameTime)
         {
+            visible = Keyboard.GetState().IsKeyDown(Keys.LeftControl);
+
+            
+
             MouseState ms = Mouse.GetState();
 
-            if (ms.ScrollWheelValue < prevMouse.ScrollWheelValue)
+            if (visible)
             {
-                if (selectedIndex + 1 > items.Count -1)
+                if (ms.ScrollWheelValue < prevMouse.ScrollWheelValue)
                 {
-                    selectedIndex = 0;
-                }
-                else
-                {
-                    selectedIndex += 1;
-                }
-                
-            }
-            else if (ms.ScrollWheelValue > prevMouse.ScrollWheelValue)
-            {
-                if (selectedIndex - 1 < 0)
-                {
-                    selectedIndex = items.Count -1;
-                }
-                else
-                {
-                    selectedIndex -= 1;
-                }
-            }
+                    if (selectedIndex + 1 > items.Count - 1)
+                    {
+                        selectedIndex = 0;
+                    }
+                    else
+                    {
+                        selectedIndex += 1;
+                    }
 
-            if (ms.LeftButton == ButtonState.Released && prevMouse.LeftButton == ButtonState.Pressed)
-            {
-                
-                SelectionMenuItem item = items[selectedIndex];
-                if (item.Count > 0)
+                }
+                else if (ms.ScrollWheelValue > prevMouse.ScrollWheelValue)
                 {
-                    item.Action();
-                    item.Count -= 1;
+                    if (selectedIndex - 1 < 0)
+                    {
+                        selectedIndex = items.Count - 1;
+                    }
+                    else
+                    {
+                        selectedIndex -= 1;
+                    }
+                }
+
+                if (ms.LeftButton == ButtonState.Released && prevMouse.LeftButton == ButtonState.Pressed)
+                {
+
+                    SelectionMenuItem item = items[selectedIndex];
+                    if (item.Count > 0)
+                    {
+                        item.Action();
+                        item.Count -= 1;
+                    }
                 }
             }
+   
 
             prevMouse = ms;
         }
@@ -113,24 +123,26 @@ namespace GameMagic.Components
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            Entity.World.Game.DrawRectangle(new Rectangle(
-                (int)Math.Floor(Entity.Position.X),
-                (int)Math.Floor(Entity.Position.Y),  
-                100, items.Count* incr + 10), Color.Orange.MultiplyAlpha(0.4f));
-
-            for (int i = 0; i < items.Count; i++)
+            if (visible)
             {
-                if (i == selectedIndex)
-                {
-                    Entity.World.Game.DrawRectangle(new Rectangle(
-                    (int)Math.Floor(Entity.Position.X),
-                    (int)Math.Floor(Entity.Position.Y) + i* incr,
-                    100, incr), Color.Aqua);
-                }
-                spriteBatch.Draw(items[i].Image, Entity.Position + new Vector2(50, i * incr + 10));
-                spriteBatch.DrawString(GMGame.mainFont, $"{items[i].Count}x", Entity.Position + new Vector2(20, i * incr + 20), Color.White);
-            }
+                Entity.World.Game.DrawRectangle(new Rectangle(
+                (int)Math.Floor(Entity.Position.X),
+                (int)Math.Floor(Entity.Position.Y),
+                100, items.Count * incr + 10), Color.Orange.MultiplyAlpha(0.4f));
 
+                for (int i = 0; i < items.Count; i++)
+                {
+                    if (i == selectedIndex)
+                    {
+                        Entity.World.Game.DrawRectangle(new Rectangle(
+                        (int)Math.Floor(Entity.Position.X),
+                        (int)Math.Floor(Entity.Position.Y) + i * incr,
+                        100, incr), Color.Aqua);
+                    }
+                    spriteBatch.Draw(items[i].Image, Entity.Position + new Vector2(50, i * incr + 10));
+                    spriteBatch.DrawString(GMGame.mainFont, $"{items[i].Count}x", Entity.Position + new Vector2(20, i * incr + 20), Color.White);
+                }
+            }
         }
 
         public int BatchNo => 99;
