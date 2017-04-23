@@ -19,6 +19,8 @@ namespace GameMagic.Components
 
         public bool Center { get; set; } = false;
 
+        public bool Visible { get; set; } = true;
+
 
         public void Init()
         {
@@ -30,15 +32,15 @@ namespace GameMagic.Components
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
+            if (!Visible) return;
             if (Center)
             {
-                spriteBatch.Draw(tex, Entity.Position - new Vector2(tex.Width, tex.Height)*0.5f);
+                spriteBatch.Draw(tex, Entity.Position - new Vector2(tex.Width, tex.Height) * 0.5f);
             }
             else
             {
                 spriteBatch.Draw(tex, Entity.Position);
             }
-
         }
 
         public int BatchNo { get; set; } = 1;

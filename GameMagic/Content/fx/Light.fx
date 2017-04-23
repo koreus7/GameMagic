@@ -17,6 +17,8 @@ sampler TextureSampler = sampler_state
 // Uniforms
 float time;
 float2 res;
+float4 col;
+
 // This data comes from the sprite batch vertex shader
 struct VertexShaderOutput
 {
@@ -32,7 +34,6 @@ float2 reduxino(float2 pos, float redux) {
 
 	return pos;
 }
-
 
 
 float Orb(VertexShaderOutput input)
@@ -62,7 +63,7 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 	color.b = value;
 	color.a = 1.0f;
     float o = Orb(input);
-	return color*float4(o,o,o,o);
+	return color*float4(o,o,o,o)*col;
 }
 
 // Compile our shader

@@ -86,6 +86,28 @@ namespace GameMagic.Components
                         dir += delta.Normalized() * 28.0f * mod;
                     }
                 }
+                else if (colider.Entity is Sink)
+                {
+                    Vector2 delta = colider.Entity.Position - Entity.Position;
+
+                    if (delta.LengthSquared() < 80000.0f)
+                    {
+                        float mod = Math.Min(delta.LengthSquared(), 200.0f) / 200.0f;
+                        dir += delta.Normalized() * 28.0f * mod;
+                    }
+                    if (delta.LengthSquared() < 10.0f)
+                    {
+                        Entity.GetComponent<SpriteRenderer>().Visible = false;
+                    }
+
+                }
+                else if (colider.Entity is Planet)
+                {
+                    Vector2 normal = (colider.Entity.Position - Entity.Position).Normalized();
+                    Vector2 tangent = new Vector2(-normal.Y, normal.X);
+
+                    dir += tangent*10.0f;
+                }
             }
             
 

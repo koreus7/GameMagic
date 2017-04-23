@@ -58,6 +58,7 @@
     <Compile Include="Components\Wander.cs" />
     <Compile Include="Entities\Hub.cs" />
     <Compile Include="Entities\MouseEntity.cs" />
+    <Compile Include="Entities\Planet.cs" />
     <Compile Include="Entities\Repelatron.cs" />
     <Compile Include="Entities\Sink.cs" />
     <Compile Include="Entities\Source.cs" />
