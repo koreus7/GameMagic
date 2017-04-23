@@ -19,6 +19,10 @@ namespace GameMagic.Components
 
         private Vector2 dir;
 
+        public Vector2 Dir {
+            get { return dir;  }
+        }
+        
         private RectColider rect;
 
         public void Init()
@@ -34,38 +38,53 @@ namespace GameMagic.Components
             int w = Entity.World.Width;
             int h = Entity.World.Height;
 
-            float theta = Noise.Generate(x/300.0f + 2000.0f, y/300.0f + 1000.0f);
-            dir = new Vector2(5.0f*(float)Math.Cos(theta*2*Math.PI),-5.0f*(float)Math.Sin(theta*2*Math.PI)) * 1.5f;
+            float theta = Noise.Generate(x/300.0f + 2000.0f, y/300.0f + 2000.0f);
+            dir = new Vector2(5.0f*(float)Math.Cos(theta*2*Math.PI),-5.0f*(float)Math.Sin(theta*2*Math.PI)) * 0.2f;
 
-            dir += new Vector2(x/w, y/h) * 0.1f;
-            dir += new Vector2((w - x)/w, (h - y)/y) * 0.1f;
+           // dir += new Vector2(x/w, y/h) * 0.1f;
+           // dir += new Vector2((w - x)/w, (h - y)/y) * 0.1f;
             MouseState m = Mouse.GetState();
 
             float mouseDistance = Vector2.Distance(Entity.Position, new Vector2(m.X, m.Y));
-            if (mouseDistance < 200)
+            if (mouseDistance < 200 && m.LeftButton == ButtonState.Pressed)
             {
                 Vector2 delta = new Vector2(m.X - Entity.Position.X, m.Y - Entity.Position.Y);
                 float mod = Math.Min(delta.LengthSquared(), 100.0f)/100.0f;
-                dir += delta.Normalized() * 30.0f * mod;
+                dir += delta.Normalized() * 35.0f * mod;
             }
 
             foreach (RectColider colider in rect.Collisions)
             {
                 if (colider.Entity is TestEntity)
                 {
-                    dir -= (colider.Entity.Position - Entity.Position).Normalized() * 3.0f;
+                    Vector2 delta = (colider.Entity.Position - Entity.Position);
+                    if (delta.LengthSquared() < 10)
+                    {
+                        // Atract when really close.
+                        dir += delta.Normalized()*3.0f * MathHelper.Min(delta.LengthSquared(), 10.0f) / 10.0f;
+                        //dir += delta.Normalized()*10.0f;
+                    }
+                    else if (delta.LengthSquared() < 200)
+                    {
+                        dir -= delta.Normalized()*1.0f;
+                    }
                 }
                 else if (colider.Entity is Repelatron)
                 {
-                    Vector2 delta = -(colider.Entity.Position - Entity.Position);
-                    float mod = (float) (10.0f*Math.Min(50.0, delta.LengthSquared()) / 50.0f);
-                    dir += delta.Normalized()*mod;
+                    Vector2 delta = (colider.Entity.Position - Entity.Position);
+                    float nd = MathHelper.Min(300.0f, delta.LengthSquared())/ 300.0f;
+                    float mod = 1.2f/MathHelper.Lerp(10f,0.2f,nd);
+                    dir -= delta.Normalized()*mod;
                 }
                 else if (colider.Entity is Hub)
                 {
                     Vector2 delta = colider.Entity.Position - Entity.Position;
-                    float mod = Math.Min(delta.LengthSquared(), 100.0f) / 100.0f;
-                    dir += delta.Normalized() * 30.0f * mod;
+
+                    if (delta.LengthSquared() < 80000.0f)
+                    {
+                        float mod = Math.Min(delta.LengthSquared(), 200.0f) / 200.0f;
+                        dir += delta.Normalized() * 28.0f * mod;
+                    }
                 }
             }
             

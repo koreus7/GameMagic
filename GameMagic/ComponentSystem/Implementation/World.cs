@@ -109,17 +109,16 @@ namespace GameMagic.ComponentSystem.Implementation
                 c.Update(time);
             }
 
-            if (ms.LeftButton == ButtonState.Released && lastMouse.LeftButton == ButtonState.Pressed)
+            if (ms.MiddleButton == ButtonState.Released && lastMouse.MiddleButton == ButtonState.Pressed)
             {
-                this.AddEntity(new Repelatron(this, new Vector2(ms.X, ms.Y)));
+                this.AddEntity(new Hub(this, new Vector2(ms.X, ms.Y)));
             }
 
 
             if (ms.RightButton == ButtonState.Released && lastMouse.RightButton == ButtonState.Pressed)
             {
-                this.AddEntity(new Hub(this, new Vector2(ms.X, ms.Y)));
+                this.AddEntity(new Repelatron(this, new Vector2(ms.X, ms.Y)));
             }
-
 
             lastMouse = ms;
         }

@@ -17,7 +17,6 @@ sampler TextureSampler = sampler_state
 // Uniforms
 float time;
 float2 res;
-
 // This data comes from the sprite batch vertex shader
 struct VertexShaderOutput
 {
@@ -40,7 +39,7 @@ float Orb(VertexShaderOutput input)
 {
     float2 aspect = res/min(res.x,res.y);
    
-	float2 p = (input.TextureCordinate - 0.5)*aspect*16.0;
+	float2 p = (input.TextureCordinate - 0.5)*aspect*40.0;
 
 	//p = reduxino(p, 0.5*(sin(time) + 1.0) *0.5);
 	
@@ -71,6 +70,6 @@ technique Technique1
 {
 	pass Pass1
 	{
-		PixelShader = compile ps_2_0 PixelShaderFunction();
+		PixelShader = compile ps_3_0 PixelShaderFunction();
 	}
 }

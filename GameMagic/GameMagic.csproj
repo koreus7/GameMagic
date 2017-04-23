@@ -59,6 +59,8 @@
     <Compile Include="Entities\Hub.cs" />
     <Compile Include="Entities\MouseEntity.cs" />
     <Compile Include="Entities\Repelatron.cs" />
+    <Compile Include="Entities\Sink.cs" />
+    <Compile Include="Entities\Source.cs" />
     <Compile Include="Entities\TestEntity.cs" />
     <Compile Include="GMGame.cs" />
     <Compile Include="Logger.cs" />

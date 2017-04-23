@@ -32,9 +32,7 @@ namespace GameMagic
         public GMGame()
         {
             graphics = new GraphicsDeviceManager(this);
-            graphics.PreferredBackBufferWidth = 1200;
-            graphics.PreferredBackBufferHeight = 720;
-            graphics.ToggleFullScreen();
+
             Content.RootDirectory = "Content";
             world = new MainWorld(this);
         }
@@ -48,7 +46,12 @@ namespace GameMagic
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            //graphics.PreferredBackBufferWidth = graphics.GraphicsDevice.DisplayMode.Width;
+            //graphics.PreferredBackBufferHeight = graphics.GraphicsDevice.DisplayMode.Height;
 
+            graphics.PreferredBackBufferWidth = 1600;
+            graphics.PreferredBackBufferHeight = 900;
+            graphics.ToggleFullScreen();
             base.Initialize();
         }
 
@@ -63,6 +66,7 @@ namespace GameMagic
 
             StaticImg.asprite = Content.Load<Texture2D>("img/asprite");
             StaticImg.sprite512 = Content.Load<Texture2D>("img/sprite512");
+            StaticImg.sprite1024 = Content.Load<Texture2D>("img/sprite1024");
 
             lightEffect = Content.Load<Effect>("fx/Light");
             post1 = Content.Load<Effect>("fx/Post1");

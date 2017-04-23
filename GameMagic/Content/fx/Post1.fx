@@ -27,10 +27,28 @@ struct VertexShaderOutput
 };
 
 
+
 // Our pixel shader
 float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 {
-	float4 color = tex2D(TextureSampler, input.TextureCordinate);
+	int samples = 10;
+	float scale = 0.0001;
+
+	float4 sum = float4(0.0,0.0,0.0,0.0);
+	float2 p = input.TextureCordinate;
+    float4 source = tex2D(TextureSampler, p);
+	int diff = (samples - 1) / 2;
+
+	for (int x = -diff; x <= diff; x++)
+	{
+		for (int y = -diff; y <= diff; y++)
+		{
+			float2 offset = float2(x, y) * scale;
+			sum += tex2D(TextureSampler, p + offset);
+		}
+	}
+	
+	float4 color = (sum / (samples * samples) + source) * source;
 	return color;
 }
 
@@ -39,6 +57,6 @@ technique Technique1
 {
 	pass Pass1
 	{
-		PixelShader = compile ps_2_0 PixelShaderFunction();
+		PixelShader = compile ps_3_0 PixelShaderFunction();
 	}
 }

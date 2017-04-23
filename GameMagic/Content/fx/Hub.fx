@@ -40,7 +40,7 @@ float Orb(VertexShaderOutput input)
 {
 	float2 aspect = res / min(res.x, res.y);
 
-	float2 p = (input.TextureCordinate - 0.5)*aspect*12.0;
+	float2 p = (input.TextureCordinate - 0.5)*aspect*36.0;
 
 	//p = reduxino(p, 0.5*(sin(time) + 1.0) *0.5);
 

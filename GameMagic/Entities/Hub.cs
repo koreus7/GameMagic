@@ -20,7 +20,7 @@ namespace GameMagic.Entities
             var sr = this.AddNewComponent<SpriteRenderer>();
             sr.Center = true;
             sr.BatchNo = 6;
-            sr.tex = StaticImg.sprite512;
+            sr.tex = StaticImg.sprite1024;
             var r = this.AddNewComponent<RectColider>();
             r.WatchCollisions = true;
             r.rect = new Rectangle(0, 0, sr.tex.Width, sr.tex.Height);
