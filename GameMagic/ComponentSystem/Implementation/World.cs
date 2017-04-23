@@ -115,7 +115,16 @@ namespace GameMagic.ComponentSystem.Implementation
                 c.Draw(time, batch);
             }
             batch.End();
-            
+
+            GMGame.lightEffect.Parameters["time"].SetValue(time.TotalGameTime.Milliseconds / 1000.0f);
+            GMGame.lightEffect.Parameters["col"].SetValue(new Vector4(0.0f, 1.0f, 1.0f, 1.0f));
+            batch.Begin(0, null, null, null, null, GMGame.lightEffect);
+            foreach (IComponent c in components.GetComponents().Where(x => x.BatchNo == 333))
+            {
+                c.Draw(time, batch);
+            }
+            batch.End();
+
 
             GMGame.repelatronEffect.Parameters["res"].SetValue(new Vector2(1, 1));
             batch.Begin(0, null, null, null, null, GMGame.repelatronEffect);

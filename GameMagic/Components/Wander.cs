@@ -46,10 +46,10 @@ namespace GameMagic.Components
             MouseState m = Mouse.GetState();
 
             float mouseDistance = Vector2.Distance(Entity.Position, new Vector2(m.X, m.Y));
-            if (mouseDistance < 200 && m.LeftButton == ButtonState.Pressed)
+            if (mouseDistance < 200 && m.RightButton == ButtonState.Pressed)
             {
                 Vector2 delta = new Vector2(m.X - Entity.Position.X, m.Y - Entity.Position.Y);
-                float mod = Math.Min(delta.LengthSquared(), 100.0f)/100.0f;
+                float mod = Math.Min(delta.LengthSquared(), 100.0f) / 100.0f;
                 dir += delta.Normalized() * 35.0f * mod;
             }
 
@@ -119,6 +119,13 @@ namespace GameMagic.Components
                     Vector2 tangent = new Vector2(-normal.Y, normal.X);
 
                     dir += tangent*10.0f;
+                }
+                else if (colider.Entity is ReversePlanet)
+                {
+                    Vector2 normal = (colider.Entity.Position - Entity.Position).Normalized();
+                    Vector2 tangent = new Vector2(-normal.Y, normal.X);
+
+                    dir -= tangent * 10.0f;
                 }
                 else if (colider.Entity is SpeedBoost)
                 {

@@ -65,6 +65,7 @@
     <Compile Include="Entities\MouseEntity.cs" />
     <Compile Include="Entities\Planet.cs" />
     <Compile Include="Entities\Repelatron.cs" />
+    <Compile Include="Entities\ReversePlanet.cs" />
     <Compile Include="Entities\Sink.cs" />
     <Compile Include="Entities\Source.cs" />
     <Compile Include="Entities\Orb.cs" />

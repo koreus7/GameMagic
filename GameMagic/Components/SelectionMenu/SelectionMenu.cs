@@ -43,6 +43,27 @@ namespace GameMagic.Components
                     Entity.World.AddEntAtMouse(new Planet(Entity.World, Vector2.One));
                 }
             });
+
+            items.Add(new SelectionMenuItem
+            {
+                Image = StaticImg.clockwise,
+                Count = 3,
+                Action = () =>
+                {
+                    Entity.World.AddEntAtMouse(new ReversePlanet(Entity.World, Vector2.One));
+                }
+            });
+
+
+            items.Add(new SelectionMenuItem
+            {
+                Image = StaticImg.speed,
+                Count = 3,
+                Action = () =>
+                {
+                    Entity.World.AddEntAtMouse(new SpeedBoost(Entity.World, Vector2.One));
+                }
+            });
         }
 
         public void Update(GameTime gameTime)

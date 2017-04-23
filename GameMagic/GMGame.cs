@@ -78,6 +78,8 @@ namespace GameMagic
 
             StaticImg.expandIcon = Content.Load<Texture2D>("img/expandIcon");
             StaticImg.counterClockwise = Content.Load<Texture2D>("img/CounterClockwise");
+            StaticImg.clockwise = Content.Load<Texture2D>("img/clockwise");
+            StaticImg.speed = Content.Load<Texture2D>("img/speed");
 
             StaticSound.absorb = Content.Load<SoundEffect>("snd/Absorb");
 
