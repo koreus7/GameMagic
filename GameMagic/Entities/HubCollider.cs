@@ -9,21 +9,16 @@ using Microsoft.Xna.Framework;
 
 namespace GameMagic.Entities
 {
-    class Repelatron : Entity
+    class HubCollider : Entity
     {
-        public Repelatron(World world, Vector2 pos) : base(world, pos)
+        public HubCollider(World world, Vector2 pos) : base(world, pos)
         {
         }
 
         public override void Init()
         {
-            var sr = this.AddNewComponent<SpriteRenderer>();
-            sr.BatchNo = 5;
-            sr.tex = StaticImg.asprite;
-            sr.Center = true;
             var r = this.AddNewComponent<RectColider>();
-            r.WatchCollisions = true;
-            r.rect = new Rectangle(0,0,200,200);
+            r.rect = new Rectangle(0,0,100,100);
         }
     }
 }

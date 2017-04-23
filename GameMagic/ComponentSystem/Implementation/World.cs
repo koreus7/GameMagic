@@ -67,8 +67,8 @@ namespace GameMagic.ComponentSystem.Implementation
             }
             batch.End();
 
-            batch.Begin();
-            foreach (IComponent c in components.GetComponents().Where(x => x.BatchNo == 0))
+            batch.Begin(0, null, null, null, null, GMGame.colliderEffect);
+            foreach (IComponent c in components.GetComponents().Where(x => x.BatchNo == 32))
             {
                 c.Draw(time, batch);
             }

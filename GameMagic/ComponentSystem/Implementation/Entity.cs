@@ -11,7 +11,7 @@ namespace GameMagic.ComponentSystem.Implementation
     public class Entity : IEntity
     {
         private readonly World _world;
-
+        
         public Vector2 Position { get; set; }
         public void SetPosition(int x, int y)
         {

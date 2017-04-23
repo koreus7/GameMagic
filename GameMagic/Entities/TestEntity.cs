@@ -24,8 +24,8 @@ namespace GameMagic.Entities
             sr.Center = true;
             var r = this.AddNewComponent<RectColider>();
             r.WatchCollisions = true;
-            int sizeMod = 200;
-            r.rect = new Rectangle(-sr.tex.Width/2 + sizeMod, -sr.tex.Height/2 + sizeMod, sr.tex.Width - sizeMod, sr.tex.Height - sizeMod);
+            r.WatchEntry = true;
+            r.rect = new Rectangle(0,0,50,50);
             this.AddNewComponent<Wander>();
         }
     }

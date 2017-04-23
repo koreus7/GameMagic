@@ -2,6 +2,7 @@
 using GameMagic.ComponentSystem.Implementation;
 using GameMagic.Entities;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Key = OpenTK.Input.Key;
@@ -24,6 +25,7 @@ namespace GameMagic
         public static Effect repelatronEffect;
         public static Effect hubEffect;
         public static Effect sinkEffect;
+        public static Effect colliderEffect;
         RenderTarget2D rt;
 
         public int Width => graphics.GraphicsDevice.Viewport.Width;
@@ -70,12 +72,15 @@ namespace GameMagic
             StaticImg.sprite512 = Content.Load<Texture2D>("img/sprite512");
             StaticImg.sprite1024 = Content.Load<Texture2D>("img/sprite1024");
 
+            StaticSound.absorb = Content.Load<SoundEffect>("snd/Absorb");
+
             lightEffect = Content.Load<Effect>("fx/Light");
             post1 = Content.Load<Effect>("fx/Post1");
             mouseEffect = Content.Load<Effect>("fx/Mouse");
             repelatronEffect = Content.Load<Effect>("fx/Repelatron");
             hubEffect = Content.Load<Effect>("fx/Hub");
             sinkEffect = Content.Load<Effect>("fx/Sink");
+            colliderEffect = Content.Load<Effect>("fx/Collider");
             rt = new RenderTarget2D(GraphicsDevice, graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight, true, graphics.PreferredBackBufferFormat, graphics.PreferredDepthStencilFormat);
 
             world.Init();

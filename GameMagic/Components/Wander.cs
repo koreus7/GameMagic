@@ -53,8 +53,11 @@ namespace GameMagic.Components
                 dir += delta.Normalized() * 35.0f * mod;
             }
 
-            foreach (RectColider colider in rect.Collisions)
+            foreach (RectColider.CollisionResult res in rect.Collisions)
             {
+
+                RectColider colider = res.Collider;
+
                 if (colider.Entity is TestEntity)
                 {
                     Vector2 delta = (colider.Entity.Position - Entity.Position);
@@ -86,14 +89,21 @@ namespace GameMagic.Components
                         dir += delta.Normalized() * 28.0f * mod;
                     }
                 }
+                else if (colider.Entity is HubCollider)
+                {
+                    if (res.JustEntered)
+                    {
+                        StaticSound.absorb.Play(0.1f, 1.0f, 1.0f);
+                    }
+                }
                 else if (colider.Entity is Sink)
                 {
                     Vector2 delta = colider.Entity.Position - Entity.Position;
 
                     if (delta.LengthSquared() < 80000.0f)
                     {
-                        float mod = Math.Min(delta.LengthSquared(), 200.0f) / 200.0f;
-                        dir += delta.Normalized() * 28.0f * mod;
+                        float mod = Math.Min(delta.LengthSquared(), 200.0f)/200.0f;
+                        dir += delta.Normalized()*28.0f*mod;
                     }
                     if (delta.LengthSquared() < 10.0f)
                     {
