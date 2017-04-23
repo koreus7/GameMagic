@@ -29,7 +29,7 @@ namespace GameMagic.Components
             items.Add(new SelectionMenuItem
             {
                 Image = StaticImg.expandIcon,
-                Count =  2,
+                Count =  4,
                 Action = () =>
                 {
                     Entity.World.AddEntAtMouse(new Repelatron(Entity.World, Vector2.One));
@@ -39,7 +39,7 @@ namespace GameMagic.Components
             items.Add(new SelectionMenuItem
             {
                 Image = StaticImg.counterClockwise,
-                Count = 3,
+                Count = 0,
                 Action = () =>
                 {
                     Entity.World.AddEntAtMouse(new Planet(Entity.World, Vector2.One));
@@ -49,7 +49,7 @@ namespace GameMagic.Components
             items.Add(new SelectionMenuItem
             {
                 Image = StaticImg.clockwise,
-                Count = 3,
+                Count = 0,
                 Action = () =>
                 {
                     Entity.World.AddEntAtMouse(new ReversePlanet(Entity.World, Vector2.One));
@@ -60,7 +60,7 @@ namespace GameMagic.Components
             items.Add(new SelectionMenuItem
             {
                 Image = StaticImg.speed,
-                Count = 3,
+                Count = 0,
                 Action = () =>
                 {
                     Entity.World.AddEntAtMouse(new SpeedBoost(Entity.World, Vector2.One));

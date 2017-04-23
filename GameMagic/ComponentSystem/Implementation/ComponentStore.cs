@@ -41,6 +41,12 @@ namespace GameMagic.ComponentSystem.Implementation
             return (a + b)*(a + b + 1)/2 + b;
         }
 
+        public void Clear()
+        {
+            _components.Clear();
+            componentIdCounter = 1;
+        }
+
         public IEnumerable<IComponent> GetComponents()
         {
             foreach (KeyValuePair<int, IComponent> entry in _components)

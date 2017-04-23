@@ -257,6 +257,7 @@ namespace GameMagic.ComponentSystem.Implementation
 
         public void Load()
         {
+            ClearLevel();
             string text = System.IO.File.ReadAllText(@"C:\Users\Public\Level.json");
 
             LevelData data = Newtonsoft.Json.JsonConvert.DeserializeObject<LevelData>(text);
@@ -266,6 +267,14 @@ namespace GameMagic.ComponentSystem.Implementation
                 AddEnt(data.Positions[i], data.EntityTypes[i]);
             }
 
+            this.AddEntity(new MouseEntity(this, Vector2.One));
+
+        }
+
+        private void ClearLevel()
+        {
+            entities.Clear();
+            components.Clear();
         }
 
         public void Update(GameTime time)

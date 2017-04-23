@@ -39,7 +39,7 @@ namespace GameMagic.Components
             int h = Entity.World.Height;
 
             float theta = Noise.Generate(x/300.0f + 2000.0f, y/300.0f + 2000.0f);
-            dir = new Vector2(5.0f*(float)Math.Cos(theta*2*Math.PI),-5.0f*(float)Math.Sin(theta*2*Math.PI)) * 0.2f;
+            dir = new Vector2(5.0f*(float)Math.Cos(theta*2*Math.PI),-5.0f*(float)Math.Sin(theta*2*Math.PI)) * 0.1f;
 
            // dir += new Vector2(x/w, y/h) * 0.1f;
            // dir += new Vector2((w - x)/w, (h - y)/y) * 0.1f;
@@ -50,7 +50,7 @@ namespace GameMagic.Components
             {
                 Vector2 delta = new Vector2(m.X - Entity.Position.X, m.Y - Entity.Position.Y);
                 float mod = Math.Min(delta.LengthSquared(), 100.0f) / 100.0f;
-                dir += delta.Normalized() * 35.0f * mod;
+                dir += delta.Normalized() * 20.0f * mod;
             }
 
             bool boost = false;
@@ -78,8 +78,8 @@ namespace GameMagic.Components
                 {
                     Vector2 delta = (colider.Entity.Position - Entity.Position);
                     float nd = MathHelper.Min(300.0f, delta.LengthSquared())/ 300.0f;
-                    float mod = 1.2f/MathHelper.Lerp(10f,0.2f,nd);
-                    dir -= delta.Normalized()*mod;
+                    float mod = 1.4f/MathHelper.Lerp(10f,0.2f,nd);
+                    dir -= delta.Normalized()*mod*2.5f;
                 }
                 else if (colider.Entity is Hub)
                 {

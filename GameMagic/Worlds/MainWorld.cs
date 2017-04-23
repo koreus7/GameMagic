@@ -13,7 +13,6 @@ namespace GameMagic
     {
         public override void Init()
         {
-            this.AddEntity(new MouseEntity(this, Vector2.One));
         }
 
         public MainWorld(GMGame game) : base(game)
