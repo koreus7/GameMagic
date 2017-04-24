@@ -157,9 +157,9 @@
 /processorParam:TextureFormat=Color
 /build:img/clockwise.png
 
-#begin snd/track1.wav
-/importer:WavImporter
+#begin snd/track1.mp3
+/importer:Mp3Importer
 /processor:SongProcessor
 /processorParam:Quality=Best
-/build:snd/track1.wav
+/build:snd/track1.mp3
 
