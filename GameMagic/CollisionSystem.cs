@@ -29,7 +29,15 @@ namespace GameMagic
 
         public void AddRect(RectColider collider)
         {
-            quadTree.Insert(collider, collider.WorldRect.X, collider.WorldRect.Y, collider.WorldRect.Width, collider.WorldRect.Height);
+            quadTree.Insert(collider, collider.WorldRect.X, collider.WorldRect.Y, collider.WorldRect.Width,
+                collider.WorldRect.Height);
+        }
+
+        public List<RectColider> SearchPoint(float x, float y)
+        {
+            List<RectColider> result = new List<RectColider>();
+            quadTree.SearchPoint(x, y, ref result);
+            return result;
         }
 
         public bool GetCollisions(RectColider collider, ref List<RectColider> results)

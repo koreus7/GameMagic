@@ -28,7 +28,7 @@ namespace GameMagic.Entities
 
             var nanny = this.AddNewComponent<Nanny>();
 
-            var child = new HubCollider(this.World, this.Position);
+            var child = new SinkCollider(this.World, this.Position);
             World.AddEntity(child);
             nanny.AddChild(child);
         }

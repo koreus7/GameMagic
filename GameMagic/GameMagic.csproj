@@ -67,6 +67,7 @@
     <Compile Include="Entities\Repelatron.cs" />
     <Compile Include="Entities\ReversePlanet.cs" />
     <Compile Include="Entities\Sink.cs" />
+    <Compile Include="Entities\SinkCollider.cs" />
     <Compile Include="Entities\Source.cs" />
     <Compile Include="Entities\Orb.cs" />
     <Compile Include="Entities\SpeedBoost.cs" />

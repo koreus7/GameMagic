@@ -36,6 +36,11 @@ namespace GameMagic.ComponentSystem.Implementation
             return (T) _components[Hash(entityID, ComponentTypeLookup[typeof(T)])];
         }
 
+        public void RemoveComponent(int id)
+        {
+            _components.Remove(id);
+        }
+
         private int Hash(int a, int b)
         {
             return (a + b)*(a + b + 1)/2 + b;

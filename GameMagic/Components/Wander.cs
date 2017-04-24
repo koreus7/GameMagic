@@ -91,11 +91,12 @@ namespace GameMagic.Components
                         dir += delta.Normalized() * 24.0f * mod;
                     }
                 }
-                else if (colider.Entity is HubCollider)
+                else if (colider.Entity is SinkCollider)
                 {
                     if (res.JustEntered)
                     {
                         StaticSound.absorb.Play(0.1f, 1.0f, 1.0f);
+                        Entity.World.SignalOrbGet();
                     }
                 }
                 else if (colider.Entity is Sink)
@@ -139,19 +140,24 @@ namespace GameMagic.Components
             }
 
 
-            Vector2 projected = Entity.Position + dir*0.01f*gameTime.ElapsedGameTime.Milliseconds;
+            Vector2 projected = Project(dir, gameTime);
             if (projected.X - rect.rect.Width/2.0f > Entity.World.Width)
             {
                 projected.X = -rect.rect.Width/2.0f;
+                dir = new Vector2(-100.0f, 0);
+                projected = Project(dir, gameTime);
             }
             else if(projected.X + rect.rect.Width/2.0f < 0)
             {
                 projected.X = Entity.World.Width + rect.rect.Width/2.0f;
+                dir = new Vector2(100.0f, 0);
+                projected = Project(dir, gameTime);
             }
 
             if (projected.Y - rect.rect.Height/2.0f > Entity.World.Height)
             {
-                projected.Y = -rect.rect.Height/2.0f;
+               projected.Y = -rect.rect.Height/2.0f;
+         
             }
             else if (projected.Y + rect.rect.Height/2.0f < 0)
             {
@@ -159,6 +165,11 @@ namespace GameMagic.Components
             }
 
             Entity.SetPosition(projected);
+        }
+
+        private Vector2 Project(Vector2 dir, GameTime gameTime)
+        {
+            return Entity.Position + dir * 0.01f * gameTime.ElapsedGameTime.Milliseconds;
         }
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)

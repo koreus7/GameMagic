@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 using Key = OpenTK.Input.Key;
 
 namespace GameMagic
@@ -27,6 +28,7 @@ namespace GameMagic
         public static Effect sinkEffect;
         public static Effect colliderEffect;
         public static Effect boostEffect;
+        public static Song backingTrack;
 
         public static SpriteFont mainFont;
 
@@ -59,7 +61,7 @@ namespace GameMagic
 
             graphics.PreferredBackBufferWidth = 1600;
             graphics.PreferredBackBufferHeight = 900;
-            graphics.ToggleFullScreen();
+            //graphics.ToggleFullScreen();
             base.Initialize();
         }
 
@@ -82,6 +84,9 @@ namespace GameMagic
             StaticImg.speed = Content.Load<Texture2D>("img/speed");
 
             StaticSound.absorb = Content.Load<SoundEffect>("snd/Absorb");
+            backingTrack = Content.Load<Song>("snd/track1");
+            MediaPlayer.IsRepeating = true;
+            MediaPlayer.Play(backingTrack);
 
             lightEffect = Content.Load<Effect>("fx/Light");
             post1 = Content.Load<Effect>("fx/Post1");
@@ -97,6 +102,23 @@ namespace GameMagic
             rt = new RenderTarget2D(GraphicsDevice, graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight, true, graphics.PreferredBackBufferFormat, graphics.PreferredDepthStencilFormat);
 
             world.Init();
+            Clear();
+        }
+
+        private void Clear()
+        {
+            world = new MainWorld(this);
+            world.Init();
+            world.Load($@"LevelEmpty.json");
+        }
+
+        public static int LevelCounter { get; set; } = 0;
+
+        public void Load()
+        {
+            world = new MainWorld(this);
+            world.Init();
+            world.Load($@"Level{GMGame.LevelCounter}.json");
         }
 
         /// <summary>
@@ -133,7 +155,12 @@ namespace GameMagic
 
             if (KeyPressed(Keys.F6))
             {
-                world.Load();
+                Clear();
+            }
+
+            if (KeyPressed(Keys.R))
+            {
+                Load();
             }
 
 
@@ -143,18 +170,18 @@ namespace GameMagic
             {
                 world.AddEntity(new Hub(world, new Vector2(ms.X, ms.Y)));
             }
-            if (KeyPressed(Keys.W))
-            {
-                world.AddEntity(new Repelatron(world, new Vector2(ms.X, ms.Y)));
-            }
-            if (KeyPressed(Keys.E))
-            {
-                world.AddEntity(new Planet(world, new Vector2(ms.X, ms.Y)));
-            }
-            if (KeyPressed(Keys.R))
-            {
-                world.AddEntity(new SpeedBoost(world, new Vector2(ms.X, ms.Y)));
-            }
+            //if (KeyPressed(Keys.W))
+            //{
+            //    world.AddEntity(new Repelatron(world, new Vector2(ms.X, ms.Y)));
+            //}
+            //if (KeyPressed(Keys.E))
+            //{
+            //    world.AddEntity(new Planet(world, new Vector2(ms.X, ms.Y)));
+            //}
+            //if (KeyPressed(Keys.R))
+            //{
+            //    world.AddEntity(new SpeedBoost(world, new Vector2(ms.X, ms.Y)));
+            //}
             if (KeyPressed(Keys.S))
             {
                 world.AddEntity(new Source(world, new Vector2(ms.X, ms.Y)));

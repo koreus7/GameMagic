@@ -17,10 +17,10 @@ namespace GameMagic.Entities
 
         public override void Init()
         {
-            var sr = this.AddNewComponent<SpriteRenderer>();
-            sr.Center = true;
-            sr.BatchNo = 1;
-            sr.tex = StaticImg.sprite1024;
+           // var sr = this.AddNewComponent<SpriteRenderer>();
+           // sr.Center = true;
+           // sr.BatchNo = 1;
+           // sr.tex = StaticImg.sprite1024;
             var r = this.AddNewComponent<RectColider>();
             r.WatchCollisions = true;
             r.rect = new Rectangle(0, 0, 200, 200);

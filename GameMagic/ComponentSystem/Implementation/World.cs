@@ -21,7 +21,7 @@ namespace GameMagic.ComponentSystem.Implementation
     {
         private readonly ComponentStore components;
         private Dictionary<int, Entity> entities;
-        private List<Entity> toBeAdded; 
+        private List<Entity> toBeAdded;
         private MouseState lastMouse;
         private int entityIDCounter = 1;
         public int Width => Game.Width;
@@ -83,7 +83,7 @@ namespace GameMagic.ComponentSystem.Implementation
 
 
             GMGame.lightEffect.Parameters["time"].SetValue(time.TotalGameTime.Milliseconds/1000.0f);
-            GMGame.lightEffect.Parameters["col"].SetValue(new Vector4(1.0f,1.0f,1.0f,1.0f));
+            GMGame.lightEffect.Parameters["col"].SetValue(new Vector4(1.0f, 1.0f, 1.0f, 1.0f));
             batch.Begin(0, null, null, null, null, GMGame.lightEffect);
             foreach (IComponent c in components.GetComponents().Where(x => x.BatchNo == 1))
             {
@@ -107,7 +107,7 @@ namespace GameMagic.ComponentSystem.Implementation
             }
             batch.End();
 
-            GMGame.lightEffect.Parameters["time"].SetValue(time.TotalGameTime.Milliseconds / 1000.0f);
+            GMGame.lightEffect.Parameters["time"].SetValue(time.TotalGameTime.Milliseconds/1000.0f);
             GMGame.lightEffect.Parameters["col"].SetValue(new Vector4(1.0f, 0.0f, 1.0f, 1.0f));
             batch.Begin(0, null, null, null, null, GMGame.lightEffect);
             foreach (IComponent c in components.GetComponents().Where(x => x.BatchNo == 3))
@@ -116,7 +116,7 @@ namespace GameMagic.ComponentSystem.Implementation
             }
             batch.End();
 
-            GMGame.lightEffect.Parameters["time"].SetValue(time.TotalGameTime.Milliseconds / 1000.0f);
+            GMGame.lightEffect.Parameters["time"].SetValue(time.TotalGameTime.Milliseconds/1000.0f);
             GMGame.lightEffect.Parameters["col"].SetValue(new Vector4(0.0f, 1.0f, 1.0f, 1.0f));
             batch.Begin(0, null, null, null, null, GMGame.lightEffect);
             foreach (IComponent c in components.GetComponents().Where(x => x.BatchNo == 333))
@@ -220,7 +220,7 @@ namespace GameMagic.ComponentSystem.Implementation
             }
 
             return -1;
-            
+
         }
 
         public void AddEntAtMouse(Entity e)
@@ -253,13 +253,30 @@ namespace GameMagic.ComponentSystem.Implementation
 
             string serialised = Newtonsoft.Json.JsonConvert.SerializeObject(data);
 
-            System.IO.File.WriteAllText(@"C:\Users\Public\Level.json", serialised);
+            System.IO.File.WriteAllText($@"C:\Users\Public\Level{DateTime.Now.ToString("yyyy-MM-dd_hh-mm-ss-tt")}.json", serialised);
         }
 
-        public void Load()
+
+        
+
+        private int orbCount = 0;
+
+        public void SignalOrbGet()
+        {
+            orbCount += 1;
+
+            if (orbCount > 40)
+            {
+                orbCount = 0;
+                GMGame.LevelCounter += 1;
+                Game.Load();
+            }
+        }
+
+        public void Load(string path)
         {
             ClearLevel();
-            string text = System.IO.File.ReadAllText(@"C:\Users\Public\Level.json");
+            string text = System.IO.File.ReadAllText(path);
 
             LevelData data = Newtonsoft.Json.JsonConvert.DeserializeObject<LevelData>(text);
 
@@ -271,7 +288,6 @@ namespace GameMagic.ComponentSystem.Implementation
             this.AddEntity(new MouseEntity(this, Vector2.One));
 
             SelectionMenu.Inst.UpdateCounts(data.Supplies);
-
         }
 
         private void ClearLevel()
@@ -292,6 +308,20 @@ namespace GameMagic.ComponentSystem.Implementation
                 c.Update(time);
             }
 
+
+
+            if (ms.MiddleButton == ButtonState.Released && lastMouse.MiddleButton == ButtonState.Pressed)
+            {
+                List<RectColider> cols = CollisionSystem.SearchPoint(ms.X, ms.Y);
+
+                foreach (RectColider rectColider in cols)
+                {
+                    var e = rectColider.Entity;
+                    RemoveEntity(e);
+                }
+            }
+
+
             lastMouse = ms;
             updating = false;
 
@@ -301,6 +331,16 @@ namespace GameMagic.ComponentSystem.Implementation
             }
 
             toBeAdded.Clear();
+        }
+
+        private void RemoveEntity(IEntity e)
+        {
+            foreach (int iD in e.GetComponentIDs())
+            {
+                components.RemoveComponent(iD);
+            }
+
+            this.entities.Remove(e.ID);
         }
 
         public virtual void Init()

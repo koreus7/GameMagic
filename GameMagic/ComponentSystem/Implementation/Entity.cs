@@ -11,7 +11,14 @@ namespace GameMagic.ComponentSystem.Implementation
     public class Entity : IEntity
     {
         private readonly World _world;
-        
+
+        private readonly List<int> _componentIDs = new List<int>();
+
+        public List<int> GetComponentIDs()
+        {
+            return _componentIDs;
+        }
+
         public Vector2 Position { get; set; }
         public void SetPosition(int x, int y)
         {
@@ -41,6 +48,7 @@ namespace GameMagic.ComponentSystem.Implementation
             var c = _world.NewComponent<T>(ID);
             c.Entity = this;
             c.Init();
+            _componentIDs.Add(c.ID);
             return c;
         }
 
@@ -48,6 +56,7 @@ namespace GameMagic.ComponentSystem.Implementation
         {
 
         }
+        
 
         public int ID { get; set; }    
     }
