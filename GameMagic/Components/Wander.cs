@@ -46,11 +46,15 @@ namespace GameMagic.Components
             MouseState m = Mouse.GetState();
 
             float mouseDistance = Vector2.Distance(Entity.Position, new Vector2(m.X, m.Y));
+
+
+            Vector2 mouseEffect = new Vector2(0.0f, 0.0f);
+
             if (mouseDistance < 200 && m.RightButton == ButtonState.Pressed)
             {
                 Vector2 delta = new Vector2(m.X - Entity.Position.X, m.Y - Entity.Position.Y);
                 float mod = Math.Min(delta.LengthSquared(), 100.0f) / 100.0f;
-                dir += delta.Normalized() * 24.0f * mod;
+                mouseEffect = delta.Normalized() * 24.0f * mod;
             }
 
             bool boost = false;
@@ -99,6 +103,14 @@ namespace GameMagic.Components
                         Entity.World.SignalOrbGet();
                     }
                 }
+                else if(colider.Entity is HubCollider)
+                {
+                    if (res.JustEntered)
+                    {
+                        StaticSound.absorbBad.Play(0.5f, 1.0f, 1.0f);;
+                    }
+
+                }
                 else if (colider.Entity is Sink)
                 {
                     Vector2 delta = colider.Entity.Position - Entity.Position;
@@ -116,17 +128,36 @@ namespace GameMagic.Components
                 }
                 else if (colider.Entity is Planet)
                 {
-                    Vector2 normal = (colider.Entity.Position - Entity.Position).Normalized();
-                    Vector2 tangent = new Vector2(-normal.Y, normal.X);
+                    Vector2 delta = colider.Entity.Position - Entity.Position;
 
-                    dir += tangent*10.0f;
+                    if (delta.LengthSquared() < 57600)
+                    {
+                        Vector2 normal = delta.Normalized();
+                        Vector2 tangent = new Vector2(-normal.Y, normal.X);
+
+                        dir += tangent * 30.0f;
+                    }
                 }
                 else if (colider.Entity is ReversePlanet)
                 {
-                    Vector2 normal = (colider.Entity.Position - Entity.Position).Normalized();
-                    Vector2 tangent = new Vector2(-normal.Y, normal.X);
+                    Vector2 delta = colider.Entity.Position - Entity.Position;
 
-                    dir -= tangent * 10.0f;
+                    if (delta.LengthSquared() < 57600)
+                    {
+                        Vector2 normal = delta.Normalized();
+                        Vector2 tangent = new Vector2(-normal.Y, normal.X);
+
+                        dir -= tangent * 30.0f;
+                    }
+                }
+                else if (colider.Entity is Goo)
+                {
+                    Vector2 delta = colider.Entity.Position - Entity.Position;
+
+                    if (delta.LengthSquared() < 10000)
+                    {
+                        mouseEffect *= 0.0f;
+                    }
                 }
                 else if (colider.Entity is SpeedBoost)
                 {
@@ -138,6 +169,8 @@ namespace GameMagic.Components
             {
                 dir *= 5.0f;
             }
+
+            dir += mouseEffect;
 
 
             Vector2 projected = Project(dir, gameTime);

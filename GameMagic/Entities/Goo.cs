@@ -9,25 +9,22 @@ using Microsoft.Xna.Framework;
 
 namespace GameMagic.Entities
 {
-    class Source : Entity
+    class Goo : Entity
     {
-        public Source(World world, Vector2 pos) : base(world, pos)
+        public Goo(World world, Vector2 pos) : base(world, pos)
         {
         }
 
+
         public override void Init()
         {
-           // var sr = this.AddNewComponent<SpriteRenderer>();
-           // sr.Center = true;
-           // sr.BatchNo = 1;
-           // sr.tex = StaticImg.sprite1024;
+            var sr = this.AddNewComponent<SpriteRenderer>();
+            sr.Center = true;
+            sr.BatchNo = 666;
+            sr.tex = StaticImg.sprite512;
             var r = this.AddNewComponent<RectColider>();
             r.WatchCollisions = true;
-            r.rect = new Rectangle(0, 0, 200, 200);
-
-            var emitter = this.AddNewComponent<OrbEmiter>();
-
-            emitter.EmitMany();
+            r.rect = new Rectangle(0, 0, 350, 350);
         }
 
     }

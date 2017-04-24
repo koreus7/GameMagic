@@ -12,11 +12,11 @@ namespace GameMagic.ComponentSystem.Implementation
     {
         private readonly World _world;
 
-        private readonly List<int> _componentIDs = new List<int>();
+        private readonly List<int> _componentTypeIDs = new List<int>();
 
-        public List<int> GetComponentIDs()
+        public List<int> GetComponentTypeIDs()
         {
-            return _componentIDs;
+            return _componentTypeIDs;
         }
 
         public Vector2 Position { get; set; }
@@ -48,7 +48,7 @@ namespace GameMagic.ComponentSystem.Implementation
             var c = _world.NewComponent<T>(ID);
             c.Entity = this;
             c.Init();
-            _componentIDs.Add(c.ID);
+            _componentTypeIDs.Add(ComponentStore.ComponentTypeLookup[c.GetType()]);
             return c;
         }
 

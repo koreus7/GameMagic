@@ -10,5 +10,7 @@ namespace GameMagic
     public static class StaticSound
     {
         public static SoundEffect absorb;
+        public static SoundEffect absorbBad;
+        public static SoundEffect win;
     }
 }

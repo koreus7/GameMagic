@@ -9,7 +9,7 @@ namespace GameMagic.ComponentSystem.Implementation
     {
         private readonly Dictionary<int, IComponent> _components = new Dictionary<int, IComponent>();
 
-        private readonly Dictionary<Type, int> ComponentTypeLookup = new Dictionary<Type, int>
+        public static readonly Dictionary<Type, int> ComponentTypeLookup = new Dictionary<Type, int>
         {
             {typeof(SpriteRenderer), 10},
             {typeof(RectColider), 5},
@@ -36,9 +36,9 @@ namespace GameMagic.ComponentSystem.Implementation
             return (T) _components[Hash(entityID, ComponentTypeLookup[typeof(T)])];
         }
 
-        public void RemoveComponent(int id)
+        public void RemoveComponent(int entityID, int componentTypeId)
         {
-            _components.Remove(id);
+            _components.Remove(Hash(entityID, componentTypeId));
         }
 
         private int Hash(int a, int b)

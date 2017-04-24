@@ -60,6 +60,7 @@
     <Compile Include="Components\SelectionMenu\SelectionMenuItem.cs" />
     <Compile Include="Components\SpriteRenderer.cs" />
     <Compile Include="Components\Wander.cs" />
+    <Compile Include="Entities\Goo.cs" />
     <Compile Include="Entities\Hub.cs" />
     <Compile Include="Entities\HubCollider.cs" />
     <Compile Include="Entities\MouseEntity.cs" />

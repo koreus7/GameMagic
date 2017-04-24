@@ -29,6 +29,14 @@ namespace GameMagic.Components
                 Entity.Position.Y + Rand.Inst.Int(100) - 50)));
         }
 
+        public void EmitMany()
+        {
+            for (int i = 0; i < 50; i++)
+            {
+                Emit();
+            }
+        }
+
         public void Update(GameTime gameTime)
         {
             //if (Entity.World.Game.KeyPressed(Keys.Space))

@@ -28,6 +28,7 @@ namespace GameMagic
         public static Effect sinkEffect;
         public static Effect colliderEffect;
         public static Effect boostEffect;
+        public static Effect gooEffect;
         public static Song backingTrack;
 
         public static SpriteFont mainFont;
@@ -84,11 +85,15 @@ namespace GameMagic
             StaticImg.speed = Content.Load<Texture2D>("img/speed");
 
             StaticSound.absorb = Content.Load<SoundEffect>("snd/Absorb");
+            StaticSound.absorbBad = Content.Load<SoundEffect>("snd/AbsorbBad");
+            StaticSound.win = Content.Load<SoundEffect>("snd/Win");
             backingTrack = Content.Load<Song>("snd/track1");
             MediaPlayer.IsRepeating = true;
             MediaPlayer.Play(backingTrack);
 
             lightEffect = Content.Load<Effect>("fx/Light");
+            lightEffect.Parameters["res"].SetValue(Vector2.One);
+            gooEffect = Content.Load<Effect>("fx/Goo");
             post1 = Content.Load<Effect>("fx/Post1");
             mouseEffect = Content.Load<Effect>("fx/Mouse");
             repelatronEffect = Content.Load<Effect>("fx/Repelatron");
@@ -190,8 +195,30 @@ namespace GameMagic
             {
                 world.AddEntity(new Sink(world, new Vector2(ms.X, ms.Y)));
             }
-            
+            if (KeyPressed(Keys.G))
+            {
+                world.AddEntity(new Goo(world, new Vector2(ms.X, ms.Y)));
+            }
 
+
+
+
+            if (KeyPressed(Keys.M))
+            {
+                if (MediaPlayer.State == MediaState.Playing)
+                {
+                    MediaPlayer.Pause();
+                }
+                else
+                {
+                    MediaPlayer.Resume();
+                }
+            }
+
+            if (KeyPressed(Keys.T))
+            {
+                world.ReturnOrbs();
+            }
 
             world.Update(gameTime);
 
@@ -239,7 +266,7 @@ namespace GameMagic
             //spriteBatch.End();
 
             //lightEffect.Parameters["res"].SetValue(new Vector2(Width, Height));
-            lightEffect.Parameters["res"].SetValue(Vector2.One);
+        
             //  lightEffect.Parameters["time"].SetValue(gameTime.TotalGameTime.Milliseconds/1000.0f);
 
             //spriteBatch.Begin(SpriteSortMode.Deferred, 

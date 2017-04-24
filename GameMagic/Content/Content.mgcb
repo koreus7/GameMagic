@@ -163,3 +163,21 @@
 /processorParam:Quality=Best
 /build:snd/track1.mp3
 
+#begin snd/AbsorbBad.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:snd/AbsorbBad.wav
+
+#begin snd/Win.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:snd/Win.wav
+
+#begin fx/Goo.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:fx/Goo.fx
+

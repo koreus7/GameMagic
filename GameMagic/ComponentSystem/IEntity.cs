@@ -18,6 +18,6 @@ namespace GameMagic.ComponentSystem
         void SetPosition(int x, int y);
         void SetPosition(Vector2 pos);
         World World { get; }
-        List<int> GetComponentIDs();
+        List<int> GetComponentTypeIDs();
     }
 }

@@ -4,6 +4,7 @@ using System.IO.Pipes;
 using System.Linq;
 using System.Security.Policy;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using GameMagic.Components;
 using GameMagic.Entities;
@@ -71,8 +72,11 @@ namespace GameMagic.ComponentSystem.Implementation
             entities[e.ID] = e;
         }
 
+        private int elapsed = 0;
+
         public void Draw(GameTime time, SpriteBatch batch)
         {
+            elapsed += time.ElapsedGameTime.Milliseconds;
 
             batch.Begin(0, null, null, null, null, GMGame.boostEffect);
             foreach (IComponent c in components.GetComponents().Where(x => x.BatchNo == 20))
@@ -81,8 +85,18 @@ namespace GameMagic.ComponentSystem.Implementation
             }
             batch.End();
 
+            GMGame.gooEffect.Parameters["res"].SetValue(new Vector2(1, 1));
+            Console.WriteLine(time.TotalGameTime.Milliseconds);
+            GMGame.gooEffect.Parameters["time"].SetValue(elapsed / 2.0f);
+            GMGame.gooEffect.Parameters["col"].SetValue(new Vector4(1.0f, 1.0f, 1.0f, 1.0f));
+            batch.Begin(0, null, null, null, null, GMGame.gooEffect);
+            foreach (IComponent c in components.GetComponents().Where(x => x.BatchNo == 666))
+            {
+                c.Draw(time, batch);
+            }
+            batch.End();
 
-            GMGame.lightEffect.Parameters["time"].SetValue(time.TotalGameTime.Milliseconds/1000.0f);
+            GMGame.lightEffect.Parameters["time"].SetValue(elapsed/100.0f);
             GMGame.lightEffect.Parameters["col"].SetValue(new Vector4(1.0f, 1.0f, 1.0f, 1.0f));
             batch.Begin(0, null, null, null, null, GMGame.lightEffect);
             foreach (IComponent c in components.GetComponents().Where(x => x.BatchNo == 1))
@@ -185,6 +199,9 @@ namespace GameMagic.ComponentSystem.Implementation
                 case 6:
                     this.AddEntity(new ReversePlanet(this, pos));
                     break;
+                case 7:
+                    this.AddEntity(new Goo(this, pos));
+                    break;
             }
         }
 
@@ -217,6 +234,10 @@ namespace GameMagic.ComponentSystem.Implementation
             if (e is ReversePlanet)
             {
                 return 6;
+            }
+            if (e is Goo)
+            {
+                return 7;
             }
 
             return -1;
@@ -267,6 +288,7 @@ namespace GameMagic.ComponentSystem.Implementation
 
             if (orbCount > 40)
             {
+                StaticSound.win.Play();
                 orbCount = 0;
                 GMGame.LevelCounter += 1;
                 Game.Load();
@@ -294,6 +316,28 @@ namespace GameMagic.ComponentSystem.Implementation
         {
             entities.Clear();
             components.Clear();
+        }
+
+        public void ReturnOrbs()
+        {
+            List<Entity> toRemove = (from entity in entities where entity.Value is Orb select entity.Value).ToList();
+
+            foreach (Entity entity in toRemove)
+            {
+                RemoveEntity(entity);
+            }
+
+            List<Entity> sauce = new List<Entity>();
+
+            foreach (KeyValuePair<int, Entity> keyValuePair in entities)
+            {
+                if (keyValuePair.Value is Source)
+                {
+                    sauce.Add(keyValuePair.Value);
+                }
+            }
+
+            sauce.ForEach(x => x.GetComponent<OrbEmiter>().EmitMany());
         }
 
         public void Update(GameTime time)
@@ -333,11 +377,12 @@ namespace GameMagic.ComponentSystem.Implementation
             toBeAdded.Clear();
         }
 
+
         private void RemoveEntity(IEntity e)
         {
-            foreach (int iD in e.GetComponentIDs())
+            foreach (int iD in e.GetComponentTypeIDs())
             {
-                components.RemoveComponent(iD);
+                components.RemoveComponent(e.ID, iD);
             }
 
             this.entities.Remove(e.ID);
