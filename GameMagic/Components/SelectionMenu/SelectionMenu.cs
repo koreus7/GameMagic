@@ -93,6 +93,7 @@ namespace GameMagic.Components
             {
                 if (ms.ScrollWheelValue < prevMouse.ScrollWheelValue)
                 {
+                    StaticSound.click.Play();
                     if (selectedIndex + 1 > items.Count - 1)
                     {
                         selectedIndex = 0;
@@ -105,6 +106,7 @@ namespace GameMagic.Components
                 }
                 else if (ms.ScrollWheelValue > prevMouse.ScrollWheelValue)
                 {
+                    StaticSound.click.Play();
                     if (selectedIndex - 1 < 0)
                     {
                         selectedIndex = items.Count - 1;

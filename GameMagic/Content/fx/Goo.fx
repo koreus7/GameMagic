@@ -58,7 +58,7 @@ float fbm(float2 uv)
 	float fqi = 2.2;
 	float amp = 0.47;
 
-	const int octaves = 7;
+	const int octaves = 3;
 
 	float r = 0.0;
 	float f = 1.0;

@@ -87,6 +87,7 @@ namespace GameMagic
             StaticSound.absorb = Content.Load<SoundEffect>("snd/Absorb");
             StaticSound.absorbBad = Content.Load<SoundEffect>("snd/AbsorbBad");
             StaticSound.win = Content.Load<SoundEffect>("snd/Win");
+            StaticSound.click = Content.Load<SoundEffect>("snd/Click");
             backingTrack = Content.Load<Song>("snd/track1");
             MediaPlayer.IsRepeating = true;
             MediaPlayer.Play(backingTrack);
@@ -108,6 +109,7 @@ namespace GameMagic
 
             world.Init();
             Clear();
+            Load();
         }
 
         public void Clear()

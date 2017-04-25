@@ -39,7 +39,7 @@ namespace GameMagic.Components
             int h = Entity.World.Height;
 
             float theta = Noise.Generate(x/320.0f + 2000.0f, y/320.0f + 2000.0f);
-            dir = new Vector2(5.0f*(float)Math.Cos(theta*2*Math.PI),-5.0f*(float)Math.Sin(theta*2*Math.PI)) * 0.1f;
+            dir = new Vector2(5.0f*(float)Math.Cos(theta*2*Math.PI),-5.0f*(float)Math.Sin(theta*2*Math.PI)) * 0.06f;
 
            // dir += new Vector2(x/w, y/h) * 0.1f;
            // dir += new Vector2((w - x)/w, (h - y)/y) * 0.1f;

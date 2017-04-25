@@ -181,3 +181,9 @@
 /processorParam:DebugMode=Auto
 /build:fx/Goo.fx
 
+#begin snd/Click.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:snd/Click.wav
+

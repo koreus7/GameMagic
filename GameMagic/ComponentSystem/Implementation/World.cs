@@ -178,11 +178,26 @@ namespace GameMagic.ComponentSystem.Implementation
             batch.End();
 
 
-
             if (gameOver)
             {
                 batch.Begin();
                 batch.DrawString(GMGame.mainFont, "Game Over", new Vector2(Width / 2f, Height / 2f), Color.White);
+                batch.End();
+            }
+
+            if (GMGame.LevelCounter == 0)
+            {
+                batch.Begin();
+                batch.DrawString(GMGame.mainFont, "Right Click to drag the orbs to the sink.", new Vector2(20, 20), Color.White);
+                batch.DrawString(GMGame.mainFont, "R to restart", new Vector2(20, 40), Color.White);
+                batch.End();
+            }
+            else if (GMGame.LevelCounter == 2)
+            {
+                batch.Begin();
+                batch.DrawString(GMGame.mainFont, "Hold control to see available modifier orbs", new Vector2(20, 20), Color.White);
+                batch.DrawString(GMGame.mainFont, "Scroll wheel to select.", new Vector2(20, 40), Color.White);
+                batch.DrawString(GMGame.mainFont, "Left Click to place", new Vector2(20, 60), Color.White);
                 batch.End();
             }
         }
@@ -306,10 +321,11 @@ namespace GameMagic.ComponentSystem.Implementation
                 orbCount = 0;
                 GMGame.LevelCounter += 1;
 
-                if (GMGame.LevelCounter > 2)
+                if (GMGame.LevelCounter > 4)
                 {
                     Game.Clear();
                     World.gameOver = true;
+                    //GMGame.LevelCounter = 0;
                 }
                 else
                 {
