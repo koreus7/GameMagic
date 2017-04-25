@@ -60,9 +60,9 @@ namespace GameMagic
             //graphics.PreferredBackBufferWidth = graphics.GraphicsDevice.DisplayMode.Width;
             //graphics.PreferredBackBufferHeight = graphics.GraphicsDevice.DisplayMode.Height;
 
-            graphics.PreferredBackBufferWidth = 1600;
-            graphics.PreferredBackBufferHeight = 900;
-            //graphics.ToggleFullScreen();
+            graphics.PreferredBackBufferWidth = 1366;
+            graphics.PreferredBackBufferHeight = 768;
+
             base.Initialize();
         }
 
@@ -110,7 +110,7 @@ namespace GameMagic
             Clear();
         }
 
-        private void Clear()
+        public void Clear()
         {
             world = new MainWorld(this);
             world.Init();
@@ -175,18 +175,22 @@ namespace GameMagic
             {
                 world.AddEntity(new Hub(world, new Vector2(ms.X, ms.Y)));
             }
-            //if (KeyPressed(Keys.W))
-            //{
-            //    world.AddEntity(new Repelatron(world, new Vector2(ms.X, ms.Y)));
-            //}
-            //if (KeyPressed(Keys.E))
-            //{
-            //    world.AddEntity(new Planet(world, new Vector2(ms.X, ms.Y)));
-            //}
-            //if (KeyPressed(Keys.R))
-            //{
-            //    world.AddEntity(new SpeedBoost(world, new Vector2(ms.X, ms.Y)));
-            //}
+            if (KeyPressed(Keys.W))
+            {
+                world.AddEntity(new Repelatron(world, new Vector2(ms.X, ms.Y)));
+            }
+            if (KeyPressed(Keys.E))
+            {
+                world.AddEntity(new Planet(world, new Vector2(ms.X, ms.Y)));
+            }
+            if (KeyPressed(Keys.Z))
+            {
+                world.AddEntity(new ReversePlanet(world, new Vector2(ms.X, ms.Y)));
+            }
+            if (KeyPressed(Keys.A))
+            {
+                world.AddEntity(new SpeedBoost(world, new Vector2(ms.X, ms.Y)));
+            }
             if (KeyPressed(Keys.S))
             {
                 world.AddEntity(new Source(world, new Vector2(ms.X, ms.Y)));
@@ -200,6 +204,10 @@ namespace GameMagic
                 world.AddEntity(new Goo(world, new Vector2(ms.X, ms.Y)));
             }
 
+            if (KeyPressed(Keys.F))
+            {
+                graphics.ToggleFullScreen();
+            }
 
 
 

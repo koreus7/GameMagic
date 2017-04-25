@@ -29,6 +29,8 @@ namespace GameMagic.ComponentSystem.Implementation
         public int Height => Game.Height;
         private bool updating = false;
 
+        private static bool gameOver = false;
+
         public CollisionSystem CollisionSystem { get; set; }
         public GMGame Game { get; private set; }
 
@@ -89,12 +91,15 @@ namespace GameMagic.ComponentSystem.Implementation
             Console.WriteLine(time.TotalGameTime.Milliseconds);
             GMGame.gooEffect.Parameters["time"].SetValue(elapsed / 2.0f);
             GMGame.gooEffect.Parameters["col"].SetValue(new Vector4(1.0f, 1.0f, 1.0f, 1.0f));
-            batch.Begin(0, null, null, null, null, GMGame.gooEffect);
+            int seed = 2914;
             foreach (IComponent c in components.GetComponents().Where(x => x.BatchNo == 666))
             {
+                batch.Begin(0, null, null, null, null, GMGame.gooEffect);
                 c.Draw(time, batch);
+                GMGame.gooEffect.Parameters["seed"].SetValue(seed/2.0f);
+                batch.End();
+                seed += 1;
             }
-            batch.End();
 
             GMGame.lightEffect.Parameters["time"].SetValue(elapsed/100.0f);
             GMGame.lightEffect.Parameters["col"].SetValue(new Vector4(1.0f, 1.0f, 1.0f, 1.0f));
@@ -171,6 +176,15 @@ namespace GameMagic.ComponentSystem.Implementation
                 c.Draw(time, batch);
             }
             batch.End();
+
+
+
+            if (gameOver)
+            {
+                batch.Begin();
+                batch.DrawString(GMGame.mainFont, "Game Over", new Vector2(Width / 2f, Height / 2f), Color.White);
+                batch.End();
+            }
         }
 
 
@@ -286,12 +300,21 @@ namespace GameMagic.ComponentSystem.Implementation
         {
             orbCount += 1;
 
-            if (orbCount > 40)
+            if (orbCount > 45)
             {
                 StaticSound.win.Play();
                 orbCount = 0;
                 GMGame.LevelCounter += 1;
-                Game.Load();
+
+                if (GMGame.LevelCounter > 2)
+                {
+                    Game.Clear();
+                    World.gameOver = true;
+                }
+                else
+                {
+                    Game.Load();
+                }
             }
         }
 

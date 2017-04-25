@@ -18,6 +18,7 @@ sampler TextureSampler = sampler_state
 float time;
 float2 res;
 float4 col;
+float seed;
 
 // This data comes from the sprite batch vertex shader
 struct VertexShaderOutput
@@ -43,6 +44,8 @@ float rand(float2 uv)
 
 float noise(float2 uv)
 {
+	uv.x += seed;
+    uv.y += seed*0.5;
 	float2 v = floor(uv);
 	float2 f = pow(sin(frac(uv)*1.57079632679), float2(2.0,2.0));
 	return lerp(lerp(rand(v), rand(v + float2(1.0, 0.0)), f.x),
@@ -75,11 +78,11 @@ float fbm(float2 uv)
 float Orb(VertexShaderOutput input)
 {
    
-	float2 p = (input.TextureCordinate - 0.5)*8.0;
+	float2 p = (input.TextureCordinate - 0.5)*6.0;
 
 	//p = reduxino(p, 0.5*(sin(time) + 1.0) *0.5);
 	
-    float c = 1.0/length(0.9*p + 0.1*p*abs(sin(time/5.0)) ) -0.2;
+    float c = 1.0/length(0.9*p + 0.1*p*abs(sin(time*0.0005)) );
 
 	c*=step(0.01,c);
 	
@@ -92,11 +95,11 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
     float o = Orb(input);
 	float2 p = input.TextureCordinate - 0.5;
 	float2 uv = p;
-	uv *= 2.0;
+	uv *= 8.0;
     uv +=  res*0.00001;
 
 	float2 tv = float2(1.0, 1.0);
-	tv = normalize(tv) * time * 0.005;
+	tv = normalize(tv) * time * 0.0005;
 
 	float2x2 b = {fbm(uv-tv*0.21+0.4), fbm(uv - tv*0.34 + 0.3),
 		      fbm(uv-tv*0.16+0.1), fbm (uv-tv* 0.28+02) 
@@ -107,7 +110,7 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 
 	float4 color = float4(0.9, 1.0, 1.1, 1.0);
 
-	return color*col*c*min(o,1.0);
+	return color*col*c*(min(o,1.0) - 0.5);
 }
 
 // Compile our shader
