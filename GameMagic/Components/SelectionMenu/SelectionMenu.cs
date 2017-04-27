@@ -138,7 +138,7 @@ namespace GameMagic.Components
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            if (visible)
+            if (visible || true)
             {
                 Entity.World.Game.DrawRectangle(new Rectangle(
                 (int)Math.Floor(Entity.Position.X),

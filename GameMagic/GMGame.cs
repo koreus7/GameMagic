@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using GameMagic.ComponentSystem.Implementation;
 using GameMagic.Entities;
 using Microsoft.Xna.Framework;
@@ -6,6 +7,8 @@ using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using Newtonsoft.Json.Bson;
+using QuakeConsole;
 using Key = OpenTK.Input.Key;
 
 namespace GameMagic
@@ -33,6 +36,8 @@ namespace GameMagic
 
         public static SpriteFont mainFont;
 
+        public static ConsoleComponent console;
+
         RenderTarget2D rt;
 
         public int Width => graphics.GraphicsDevice.Viewport.Width;
@@ -40,13 +45,53 @@ namespace GameMagic
 
         public static bool DebugOverlay = false;
 
+        public static bool devMode = false;
+
+        private PythonInterpreter interpreter;
+
         public GMGame()
         {
             graphics = new GraphicsDeviceManager(this);
 
+            console = new ConsoleComponent(this);
+            console.TimeToToggleOpenClose = 0.05f;
+            Components.Add(console);
+
+            interpreter = new PythonInterpreter();
+            console.Interpreter = interpreter;
+
+            interpreter.AddVariable("gm", this);
+
             Content.RootDirectory = "Content";
             world = new MainWorld(this);
         }
+
+
+        #region Functions for python interpreter
+
+        public void Log(string value)
+        {
+            interpreter.RunScript($"print \"{value}\"");
+        }
+
+        public void FullScreen()
+        {
+            graphics.ToggleFullScreen();
+        }
+
+        public void DevMode()
+        {
+            devMode = true;
+            Log("Dev mode enabled");
+        }
+
+        public void ExitDevMode()
+        {
+            devMode = false;
+            Log("Dev mode disabled");
+        }
+
+        #endregion
 
         /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.
@@ -112,20 +157,30 @@ namespace GameMagic
             Load();
         }
 
-        public void Clear()
-        {
-            world = new MainWorld(this);
-            world.Init();
-            world.Load($@"LevelEmpty.json");
-        }
 
         public static int LevelCounter { get; set; } = 0;
 
+
+        public void Clear()
+        {
+            Load($@"LevelEmpty");
+        }
+
         public void Load()
+        {
+            Load($@"Level{GMGame.LevelCounter}");
+        }
+
+        public void Load(string levelName)
         {
             world = new MainWorld(this);
             world.Init();
-            world.Load($@"Level{GMGame.LevelCounter}.json");
+            world.Load(levelName);
+        }
+
+        public void Save(string path = "")
+        {
+            world.Save(path);
         }
 
         /// <summary>
@@ -155,60 +210,74 @@ namespace GameMagic
                 DebugOverlay = !DebugOverlay;
             }
 
-            if (KeyPressed(Keys.F5))
-            {
-                world.Save();
-            }
 
-            if (KeyPressed(Keys.F6))
-            {
-                Clear();
-            }
 
             if (KeyPressed(Keys.R))
             {
                 Load();
             }
-
+ 
 
             MouseState ms = Mouse.GetState();
 
-            if (KeyPressed(Keys.Q))
+
+
+
+            if (devMode)
             {
-                world.AddEntity(new Hub(world, new Vector2(ms.X, ms.Y)));
+                if (KeyPressed(Keys.Q))
+                {
+                    world.AddEntity(new Hub(world, new Vector2(ms.X, ms.Y)));
+                }
+                if (KeyPressed(Keys.W))
+                {
+                    world.AddEntity(new Repelatron(world, new Vector2(ms.X, ms.Y)));
+                }
+                if (KeyPressed(Keys.E))
+                {
+                    world.AddEntity(new Planet(world, new Vector2(ms.X, ms.Y)));
+                }
+                if (KeyPressed(Keys.Z))
+                {
+                    world.AddEntity(new ReversePlanet(world, new Vector2(ms.X, ms.Y)));
+                }
+                if (KeyPressed(Keys.A))
+                {
+                    world.AddEntity(new SpeedBoost(world, new Vector2(ms.X, ms.Y)));
+                }
+                if (KeyPressed(Keys.S))
+                {
+                    world.AddEntity(new Source(world, new Vector2(ms.X, ms.Y)));
+                }
+                if (KeyPressed(Keys.D))
+                {
+                    world.AddEntity(new Sink(world, new Vector2(ms.X, ms.Y)));
+                }
+                if (KeyPressed(Keys.G))
+                {
+                    world.AddEntity(new Goo(world, new Vector2(ms.X, ms.Y)));
+                }
+
+                if (KeyPressed(Keys.F5))
+                {
+                    world.Save();
+                }
+
+                if (KeyPressed(Keys.F6))
+                {
+                    Clear();
+                }
             }
-            if (KeyPressed(Keys.W))
+
+
+            if (KeyPressed(Keys.OemTilde, true))
             {
-                world.AddEntity(new Repelatron(world, new Vector2(ms.X, ms.Y)));
-            }
-            if (KeyPressed(Keys.E))
-            {
-                world.AddEntity(new Planet(world, new Vector2(ms.X, ms.Y)));
-            }
-            if (KeyPressed(Keys.Z))
-            {
-                world.AddEntity(new ReversePlanet(world, new Vector2(ms.X, ms.Y)));
-            }
-            if (KeyPressed(Keys.A))
-            {
-                world.AddEntity(new SpeedBoost(world, new Vector2(ms.X, ms.Y)));
-            }
-            if (KeyPressed(Keys.S))
-            {
-                world.AddEntity(new Source(world, new Vector2(ms.X, ms.Y)));
-            }
-            if (KeyPressed(Keys.D))
-            {
-                world.AddEntity(new Sink(world, new Vector2(ms.X, ms.Y)));
-            }
-            if (KeyPressed(Keys.G))
-            {
-                world.AddEntity(new Goo(world, new Vector2(ms.X, ms.Y)));
+                console.ToggleOpenClose();
             }
 
             if (KeyPressed(Keys.F))
             {
-                graphics.ToggleFullScreen();
+               FullScreen();
             }
 
 
@@ -236,9 +305,9 @@ namespace GameMagic
             base.Update(gameTime);
         }
 
-        public bool KeyPressed(Keys k)
+        public bool KeyPressed(Keys k, bool ignoreConsole = false)
         {
-            return newKeyState.IsKeyDown(k) && oldKeyState.IsKeyUp(k);
+            return newKeyState.IsKeyDown(k) && oldKeyState.IsKeyUp(k) && (!console.IsVisible || ignoreConsole);
         }
 
         /// <summary>
